@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
+/*   Updated: 2023/01/11 16:33:10 by hferjani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 
 #include <stdio.h>
@@ -16,6 +28,8 @@
 
 #define MAXLINE 1024
 #define MAXARGS 128 // maxargs in struct can't be variable
+
+#define PATH_MAX 4096
 
 #define TRUE 1
 #define FALSE 0
@@ -75,6 +89,17 @@ typedef struct s_data
 
 /*init.c*/
 
+int     init_struct(t_data *data, char **env);
+
+/*free.c*/
+
+void    free_array(char **array);
+
+/*parser.*/
+
+int    valid_syntax(char *line);
+
+int     check_open_quotes(const char *line);
 void    sig_handler(int signum);
 char    *display_prompt(void);
 void    ft_basic_functions(char *line, char **argv);

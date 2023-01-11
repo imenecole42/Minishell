@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic_functions.c                                  :+:      :+:    :+:   */
+/*   env_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 10:45:41 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/11 16:27:56 by hferjani         ###   ########.fr       */
+/*   Created: 2023/01/11 10:46:55 by hferjani          #+#    #+#             */
+/*   Updated: 2023/01/11 11:15:28 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "Libft/libft.h"
 
-t_env *push_cell(t_env *list, char *data, int pos)
+/*void    push_cell(t_env **head_list, char *value)
 {
-	int i;
 	t_env *tmp;
 	t_env *new_node;
 
-	tmp = list;
 	new_node = malloc(sizeof(t_env));
 	if(!new_node)
-		return (NULL);
-	new_node->next = NULL;
-	new_node->content = data;
-	if (!list)
-		return (new_node);
-	i = 0;
-	while (i < pos)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	new_node->next = tmp;
-	return (list);
+		return ;
+	new_node->content = value;
+    new_node->next = NULL;
+	if (!*head_list)
+		(*head_list) = new_node;
+	else
+    {
+        tmp = (*head_list);
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new_node;
+    }
 }
 
 void	print_list(t_env *list)
@@ -59,37 +56,11 @@ void	display_env(char **env)
 	t_env *list;
 
 	i = 0;
+	list = NULL;
 	while (env[i])
 	{
-		list = push_cell(list, env[i], i);
-		i++;
+		push_cell(&list, env[i++]);
 	}
-	print_list(list);
+	//print_list(list);
 }
-
-int	is_even(int num)
-{
-	return !(num & 1);
-}
-
-int	ft_quotes(char *s)
-{
-	int	i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] == 34 || s[i] == 39)
-			count++;
-		i++;
-	}
-	if(is_even(count))
-	{
-		return(1);
-		printf("The number is even.");
-	}
-	return(0);
-}
-
+*/

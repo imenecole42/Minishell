@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 10:44:49 by hferjani          #+#    #+#             */
+/*   Updated: 2023/01/11 11:56:22 by hferjani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "Libft/libft.h"
 
@@ -23,6 +35,12 @@ int     dup_env(t_data *data, char **env)
         if (!data->env[i])
             return(0);
     }
+    i = -1;
+    while (data->env[++i] != NULL)
+    {
+        size++;
+        printf(BOLD_RED"env[%d] == %s\n"RESET, i, data->env[i]);
+    }
     return(1);
 }
 
@@ -39,6 +57,5 @@ int    init_struct(t_data *data, char **env)
         printf("error : initialization of environment");
         return (0);
     }
-    
-
+    return(1);
 }

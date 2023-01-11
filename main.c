@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
+/*   Updated: 2023/01/11 16:43:02 by hferjani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "Libft/libft.h"
 
@@ -36,6 +48,11 @@ char    *display_prompt(void)
         prompt = NULL;
     }
     prompt = readline("🐚> ");
+    if (!prompt)
+    {
+        printf("BYE BYE 😘\n");
+        exit(0);
+    }
     if(ft_strlen(prompt) > 0)
         add_history(prompt);
     return (prompt);
@@ -52,14 +69,22 @@ int check_input(t_data *data)
         printf(BOLD_YELLOW"command line is too long\n You want to break the parsing or what?\n"RESET);
         free(data->line);
         free(tmp);
-        return(1);
+        return(0);
     }
-    return(0);
+    if(check_open_quotes(tmp) == TRUE)
+    {
+        printf(BOLD_YELLOW"error: check your quotes!\n"RESET);
+        free(data->line);
+        free(tmp);
+        return(0);
+    }
+    free(tmp);
+    return(1);
 }
 
 int main(int argc, char **argv, char **env)
 {
-    (void)  argv;
+    //(void)  argv;
     t_data  data;
     int i = -1;
 
@@ -71,18 +96,14 @@ int main(int argc, char **argv, char **env)
         {
             signal(SIGINT, sig_handler);
             data.line = display_prompt();
-            if (check_input(&data) == TRUE)
-                return (-1);
-            data.cmds->cmd = ft_split(data.line, 32);
-            while (data.cmds->cmd[++i] != NULL)
+            if (check_input(&data) == FALSE)
+                return (1);
+            argv = ft_split(data.line, 32);
+            while (argv[++i] != NULL)
             {
-                printf(BOLD_GREEN"cmd[%d] == %s\n"RESET, i, data.cmd[i]);
+                printf(BOLD_GREEN"cmd[%d] == %s\n"RESET, i, argv[i]);
             }
-            i = -1;
-            while (env[++i] != NULL)
-            {
-                printf(BOLD_PURPLE"env[%d] == %s\n"RESET, i, env[i]);
-            }
+            free_array(argv);
             i = -1;
             if (ft_quotes(data.line))
             {
