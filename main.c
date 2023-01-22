@@ -6,12 +6,13 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/11 16:43:02 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:56:02 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "Libft/libft.h"
+#include "struct.h"
 
 /*t_list  *head = ft_lstnew(NULL);
 t_list  *minishell = head->next;*/
@@ -32,9 +33,14 @@ void    sig_handler(int signum)
     {
         write(1, "\n", 1);
         rl_on_new_line();
-        rl_replace_line("", 0);
+        //rl_replace_line("", 0);
         rl_redisplay();
     }
+    // if (signum == SIGQUIT) (core dump) a refaire
+    // {
+    //     rl_on_new_line();
+    //     rl_redisplay();
+    // }
 }
 
 char    *display_prompt(void)
@@ -64,18 +70,25 @@ int check_input(t_data *data)
 
     tmp = NULL;
     tmp = ft_strdup(data->line);
-    if(ft_strlen(tmp) > MAXLINE)
+    if (ft_strlen(tmp) > MAXLINE)
     {
         printf(BOLD_YELLOW"command line is too long\n You want to break the parsing or what?\n"RESET);
-        free(data->line);
-        free(tmp);
+        free (data->line);
+        free (tmp);
         return(0);
     }
-    if(check_open_quotes(tmp) == TRUE)
+    if (check_open_quotes(tmp) == TRUE)
     {
         printf(BOLD_YELLOW"error: check your quotes!\n"RESET);
-        free(data->line);
-        free(tmp);
+        free (data->line);
+        free (tmp);
+        return(0);
+    }
+    if ((begin_sep_error(tmp) == TRUE) || end_sep_error(tmp) == TRUE)
+    {
+        printf("syntax error near unexpected token\n");
+        free (data->line);
+        free (tmp);
         return(0);
     }
     free(tmp);
@@ -84,9 +97,10 @@ int check_input(t_data *data)
 
 int main(int argc, char **argv, char **env)
 {
-    //(void)  argv;
+    (void)  argv;
     t_data  data;
-    int i = -1;
+
+    //int i = -1;
 
     if (argc == 1)
     {
@@ -98,19 +112,9 @@ int main(int argc, char **argv, char **env)
             data.line = display_prompt();
             if (check_input(&data) == FALSE)
                 return (1);
-            argv = ft_split(data.line, 32);
-            while (argv[++i] != NULL)
-            {
-                printf(BOLD_GREEN"cmd[%d] == %s\n"RESET, i, argv[i]);
-            }
-            free_array(argv);
-            i = -1;
-            if (ft_quotes(data.line))
-            {
-                printf("number is even\n");
-            }
-            else 
-                printf("number is odd\n");
+            data.token = read_input(data.line);
+            //print_token(&data.token);
+            test_parse(&data);
             //display_env(env);
             //ft_basic_functions(line, argv);
             //read_command(command, parameters); // read input from terminal

@@ -1,42 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 10:51:36 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/21 22:44:19 by hferjani         ###   ########.fr       */
+/*   Created: 2023/01/18 11:08:51 by hferjani          #+#    #+#             */
+/*   Updated: 2023/01/18 13:59:35 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "Libft/libft.h"
 
-int is_quote(char c)
+int is_sep(char *line)
 {
-    if(c == 34 || c == 39)
-        return(1);
-    return(0);
-}
 
-int is_space(char *s)
-{
-    if ((*s == ' ') || (*s == '\t'))
+    if (*line == '|' || *line == '>' || *line == '<')
         return (1);
     return (0);
 }
 
-/*echint is_sep(char *line)
+int    begin_sep_error(char *line)
 {
-    int i;
+    while (is_space(line))
+        line++;
+    if (is_sep(line))
+        return (1);
+    return (0);
+    
+}
 
-    i = 0;
-    if (line[i] == '|' || line[i] == '>' || line[i] == '<')
+int    end_sep_error(char *line)
+{
+    while (*line)
+        line++;
+    line--;
+    while(is_space(line))
+        line--;
+    if (is_sep(line))
         return (1);
     return (0);
 }
-
 
 int check_open_quotes(const char *line)
 {
@@ -56,4 +61,4 @@ int check_open_quotes(const char *line)
     if (!is_even(open_dquotes) || !is_even(open_squotes))
         return(1);
     return(0);
-}*/
+}

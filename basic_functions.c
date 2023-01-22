@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:45:41 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/11 16:27:56 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:02:09 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	display_env(char **env)
 		list = push_cell(list, env[i], i);
 		i++;
 	}
-	print_list(list);
+	//print_list(list);
 }
 
 int	is_even(int num)
