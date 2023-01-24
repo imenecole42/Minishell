@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/21 23:51:11 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/24 23:33:46 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <string.h>
+#include <stdbool.h>
 //#include "Libft/get_next_line.h"
 #include "Libft/libft.h"
 #include "style.h"
@@ -86,18 +87,21 @@ typedef struct  s_token
     struct s_token  *next;
 } t_token;
 
-typedef struct  s_fd
+/*typedef struct  s_fd
 {
         int     in;
         int     out;
-} t_fd;
+} t_fd;*/
 
 typedef struct s_cmd
 {
         char    **cmd;
-        int     is_pipe;
-        //t_fd    fd;
-        char    *heredoc;
+        bool    is_pipe;
+        bool    is_dollar;
+        int     fd[2];
+        int     infile;
+        int     outfile;
+        char    *cmd_path;
         struct s_cmd    *next;
         struct s_cmd    *prev;
         
@@ -116,7 +120,7 @@ typedef struct s_data
 /*init.c*/
 
 int     init_struct(t_data *data, char **env);
-int    init_cmd(t_cmd **cmd);
+void    init_cmd(t_cmd *cmd);
 
 /*free.c*/
 
@@ -125,6 +129,8 @@ void    free_array(char **array);
 /*parser.c*/
 
 int    valid_syntax(char *line);
+int     forbidden_series(char *s);
+//int   forbidden_series(t_token *token);
 
 /*lexer_utils.c*/
 
@@ -140,8 +146,10 @@ void    print_token(t_token **head);
 int     is_sep(char *line);
 
 int     check_open_quotes(const char *line);
+int     open_quotes(const char *line, int pos);
 int     begin_sep_error(char *line);
 int     end_sep_error(char *line);
+char    *parse_quotes(t_token *lexer);
 
 void    sig_handler(int signum);
 void    free_check_input(char *s1, char *s2);

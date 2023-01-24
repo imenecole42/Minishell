@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:44:49 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/21 23:51:36 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:36:47 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ int    init_struct(t_data *data, char **env)
     return(1);
 }
 
-int init_cmd(t_cmd **cmd)
+void init_cmd(t_cmd *cmd)
 {
-    (*cmd)->cmd = NULL;
-    (*cmd)->is_pipe = FALSE;
-    (*cmd)->heredoc = NULL;
-    (*cmd)->prev = NULL;
-    (*cmd)->next = NULL;
-    return (1);
+    cmd->cmd = NULL;
+    cmd->is_pipe = FALSE;
+    cmd->heredoc = NULL;
+    cmd->prev = NULL;
+    cmd->next = NULL;
+    //return (1);
 }

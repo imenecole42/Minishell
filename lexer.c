@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/17 15:43:27 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/24 22:57:48 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,28 +118,34 @@ t_token *read_input(char *line)
 {
     int i;
     t_token *lexer;
+    char    *test = NULL;
+    //test = malloc(sizeof(char) * 1000);
     enum e_state status;
 
     i = 0;
     status = DEFAULT;
     lexer = NULL;
-    //lexer = malloc(sizeof(lexer));
-    //if (!lexer)
-        //return (NULL);
     if (is_ascii(line) == FALSE)
     {
         printf("error: invalid characters found");
         // error function
     }
+    if (forbidden_series(line) == TRUE)
+    {
+        printf("syntax error near unexpected token\n");
+        return (NULL);
+        //error function
+    }
     while (line[i])
     {
         status = set_status(status, line, i);
-        //printf("status = %d\n", status);
-        // printf("status value : %d\n", status);
         i = tokenizer(&lexer, line, i, status);
         //printf("read_input i:%d\n", i);
         //i++;
     }
+    test = parse_quotes(lexer);
+    printf("test = %s\n", test);
+    
     // free(line);
     return (lexer);
 }

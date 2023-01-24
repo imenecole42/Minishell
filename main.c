@@ -6,25 +6,13 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/21 22:56:02 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:10:55 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "Libft/libft.h"
 #include "struct.h"
-
-/*t_list  *head = ft_lstnew(NULL);
-t_list  *minishell = head->next;*/
-
-/*void    display_prompt(void)
-{
-    char *prompt;
-    
-    prompt = "minishell>";
-    printf("%s", prompt);
-
-}*/
 
 void    sig_handler(int signum)
 {
@@ -113,8 +101,8 @@ int main(int argc, char **argv, char **env)
             if (check_input(&data) == FALSE)
                 return (1);
             data.token = read_input(data.line);
-            //print_token(&data.token);
-            test_parse(&data);
+            print_token(&data.token);
+            //test_parse(&data);
             //display_env(env);
             //ft_basic_functions(line, argv);
             //read_command(command, parameters); // read input from terminal
