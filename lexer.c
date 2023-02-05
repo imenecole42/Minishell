@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/24 22:57:48 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/28 00:06:26 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ int is_special_char(char *line, int i)
         return (10);
     else
         return (0);
+}
+
+int is_d_quotes(char *line, int i)
+{
+    if (line[i] == '\"')
+    {
+        return (1);
+    }
+    return (0);
+}
+
+int is_s_quotes(char *line, int i)
+{
+    if (line[i] == '\'')
+    {
+        return (1);
+    }
+    return (0);
 }
 
 int set_status(enum e_state status, char *str, int i)
@@ -72,6 +90,34 @@ int save_word(t_token **lexer, char *line, enum e_state status)
     return (i);
 }
 
+int save_dquotes(t_token **lexer, char *line, enum e_state status)
+{
+    int i;
+
+    i = 0;
+    //printf("%s\n", line);
+    while (is_d_quotes(line, i) == FALSE)
+    {
+        i++;
+    }
+    ft_lstadd_back_token(lexer, create_token(line, i, WORD, status));
+    return (i);
+}
+
+int save_squotes(t_token **lexer, char *line, enum e_state status)
+{
+    int i;
+
+    i = 0;
+    //printf("%s\n", line);
+    while (is_s_quotes(line, i) == FALSE)
+    {
+        i++;
+    }
+    ft_lstadd_back_token(lexer, create_token(line, i, WORD, status));
+    return (i);
+}
+
 int save_redirection(t_token **lexer, char *line, int i, enum e_state status)
 {
     int j;
@@ -101,15 +147,23 @@ int tokenizer(t_token **lexer, char *line, int i, enum e_state status)
     else if (is_special_char(line, i) == 1)
         ft_lstadd_back_token(lexer, create_token(line + (i++), 1, PIPE, status));
     else if (is_special_char(line, i) == 9)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, WHITESPACE, status));
+        i++;
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, WHITESPACE, status));
     else if (is_special_char(line, i) > 1 && is_special_char(line, i) < 6)
         i += save_redirection(lexer, line, i, status);
     else if (is_special_char(line, i) == 8)
         ft_lstadd_back_token(lexer, create_token(line + (i++), 1, ENV, status));
     else if (is_special_char(line, i) == 6)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, S_QUOTE, status));
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, S_QUOTE, status));
+        {i++;
+        i += save_squotes(lexer, line + i, status);
+        i++;}
     else if (is_special_char(line, i) == 7)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, D_QUOTE, status));
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, D_QUOTE, status));
+        {i++;
+        i += save_dquotes(lexer, line + i, status);
+        i++;}
+        
     return (i);
 }
 
@@ -118,7 +172,7 @@ t_token *read_input(char *line)
 {
     int i;
     t_token *lexer;
-    char    *test = NULL;
+    //char    *test = NULL;
     //test = malloc(sizeof(char) * 1000);
     enum e_state status;
 
@@ -143,8 +197,8 @@ t_token *read_input(char *line)
         //printf("read_input i:%d\n", i);
         //i++;
     }
-    test = parse_quotes(lexer);
-    printf("test = %s\n", test);
+    //test = parse_quotes(lexer);
+    //printf("test = %s\n", test);
     
     // free(line);
     return (lexer);

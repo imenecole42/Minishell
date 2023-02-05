@@ -2,34 +2,6 @@
 #include "minishell.h"
 #include "Libft/libft.h"
 
-/*void    test_parse(t_data *data)
-{
-    t_data  *tmp;
-    int flag_pipe = 0;
-    //t_cmd   *cmd;
-
-    tmp = data;
-    print_token(&tmp->token);
-    //printf("%d\n", tmp->cmds->is_pipe);
-    ///init_cmd(tmp->cmds);
-        while (tmp->token)
-        {
-            printf("entree boucle = %d\n", flag_pipe);
-            if (tmp->token->type == PIPE && tmp->token->qstatus == DEFAULT)
-            {
-                if (flag_pipe == TRUE)
-                    printf("error '||'\n");
-                else
-                    flag_pipe = TRUE;
-                //printf("%d\n", flag_pipe);
-            }
-            tmp->token = tmp->token->next;
-            //printf("%d\n", flag_pipe);
-        }
-    }*/
-
-
-
 // int main(int ac, char **av)
 // {
 //     (void)ac;
@@ -52,10 +24,3 @@
     // exit(0);
 // }
 
-/*int main()
-{
-    char *line = "bon";
-    printf("%c\n", *line++);
-    printf("%c\n", *line++);
-    printf("%c\n", *line);
-}*/

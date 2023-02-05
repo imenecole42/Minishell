@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:13 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/24 17:09:18 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:43:05 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int forbidden_series(char *s)
     
     i = 0;
     flag = 0;
-    //printf("%d\n", flag_quote);
     while (s[i])
     {
         flag = open_quotes(s, i);
@@ -53,28 +52,6 @@ int forbidden_series(char *s)
     return (0);
 }
 
-/*int forbidden_series(t_token *token)
-{
-    t_token *cur;
-    //static char *enumCharacter[] = {";", "&"};
-    
-    cur = token;
-    while (cur->next != NULL && cur->qstatus == DEFAULT)
-    {
-        if ((ft_strncmp(cur->value, ";", 1) == 0)  &&(ft_strncmp(cur->value, ";", 1) == 0))
-            return (1);
-        else if (cur->type == PIPE && (ft_strncmp(cur->next->value,";", 1) == 0))
-            return (1);
-        else if ((ft_strncmp(cur->value, "&", 1) == 0) && (ft_strncmp(cur->next->value,";", 1) == 0))
-            return (1);
-        else if ((ft_strncmp(cur->value, ";", 1) == 0) && (ft_strncmp(cur->next->value,"&", 1) == 0))
-            return (1);
-        else if (cur->type == DREDIR_OUT && cur->next->type == REDIR_OUT)
-            return (1);
-        cur = cur->next;
-    }
-    return (0);
-}*/
 t_token *create_token(char *value, int len, enum e_type type, enum e_state status)
 {
     t_token *new_node;

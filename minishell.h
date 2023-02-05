@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/24 23:33:46 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:39:17 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,16 +140,19 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new);
 void	push(t_token **head_ref, t_token *new);
 void    print_liste(t_token * head);
 void    test_parse(t_data *data);
+int     is_special_char(char *line, int i);
 
 t_token *read_input(char *line);
 void    print_token(t_token **head);
 int     is_sep(char *line);
+
 
 int     check_open_quotes(const char *line);
 int     open_quotes(const char *line, int pos);
 int     begin_sep_error(char *line);
 int     end_sep_error(char *line);
 char    *parse_quotes(t_token *lexer);
+int     save_dquotes(t_token **lexer, char *line, enum e_state status);
 
 void    sig_handler(int signum);
 void    free_check_input(char *s1, char *s2);
