@@ -6,13 +6,12 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/24 15:10:55 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:14:22 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "Libft/libft.h"
-#include "struct.h"
 
 void    sig_handler(int signum)
 {
@@ -74,7 +73,7 @@ int check_input(t_data *data)
     }
     if ((begin_sep_error(tmp) == TRUE) || end_sep_error(tmp) == TRUE)
     {
-        printf("syntax error near unexpected token\n");
+        printf("syntax error near unexpected token `newline' \n");
         free (data->line);
         free (tmp);
         return(0);
@@ -88,8 +87,6 @@ int main(int argc, char **argv, char **env)
     (void)  argv;
     t_data  data;
 
-    //int i = -1;
-
     if (argc == 1)
     {
         if(init_struct(&data, env) == FALSE)
@@ -102,6 +99,8 @@ int main(int argc, char **argv, char **env)
                 return (1);
             data.token = read_input(data.line);
             print_token(&data.token);
+            data.cmds = init_command();
+            parse_cmd_table(data.token, &data.cmds);
             //test_parse(&data);
             //display_env(env);
             //ft_basic_functions(line, argv);

@@ -6,12 +6,11 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:13 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/27 22:43:05 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:01:09 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "struct.h"
 
 int is_ascii(char *s)
 {
@@ -47,6 +46,27 @@ int forbidden_series(char *s)
             return (1);
         else if (s[i] == '>' && s[i + 1] == '>' && s[i + 2] == '>' && !flag)
             return (1);
+        else if (s[i] == '$' && s[i + 1] == '$' && !flag)
+            return (2);
+        i++;
+    }
+    return (0);
+}
+
+int do_not_implement(char *s)
+{
+    int i;
+    int flag;
+    
+    i = 0;
+    flag = 0;
+    while (s[i])
+    {
+        flag = open_quotes(s, i);
+        if (s[i] == ';' && !flag)
+            return (1);
+        if (s[i] == '\\' && !flag)
+            return (1);
         i++;
     }
     return (0);
@@ -77,6 +97,8 @@ t_token *create_token(char *value, int len, enum e_type type, enum e_state statu
     return (new_node);
 }
 
+
+
 void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
 	t_token	*last;
@@ -94,12 +116,14 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	last->next = new;
 }
 
+//void    ft_lstadd_back_command()
+
 
 
 void    print_token(t_token **head)
 {
     t_token *cur;
-    static char *enumStrings[] = {"WORD", "WHITESPACE", "NEW_LINE", "PIPE", "HEREDOC", "ENV", "REDIR_IN", "REDIR_OUT", "DREDIR_OUT", "S_QUOTE", "D_QUOTE"};
+    static char *enumStrings[] = {"WORD", "WHITESPACE", "NEW_LINE", "PIPE", "HEREDOC", "ENV", "REDIR_IN", "REDIR_OUT", "DREDIR_OUT", "S_QUOTE", "D_QUOTE", "OPEN_FILE", "EXIT_FILE", "EXIT_FILE_RET", "LIMITER"};
     static char *enumQuotes[] = {"DEFAULT", "SQUOTE", "DQUOTE"};
 
     cur = *head;

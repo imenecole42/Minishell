@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/27 21:39:17 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:23:17 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 //#include "Libft/get_next_line.h"
 #include "Libft/libft.h"
 #include "style.h"
-#include "struct.h"
 
 #define MAXLINE 1024
 #define MAXARGS 128 // maxargs in struct can't be variable
@@ -73,6 +72,10 @@ enum    e_type
     DREDIR_OUT,
     S_QUOTE,
     D_QUOTE,
+    OPEN_FILE,
+    EXIT_FILE,
+    EXIT_FILE_RET,
+    LIMITER,
 };
 
 //TOKENS
@@ -93,17 +96,21 @@ typedef struct  s_token
         int     out;
 } t_fd;*/
 
+typedef struct s_parse
+{
+        char    *str;
+	int	cmd;
+	enum e_type     type;
+}	t_parse;
+
 typedef struct s_cmd
 {
         char    **cmd;
-        bool    is_pipe;
-        bool    is_dollar;
-        int     fd[2];
-        int     infile;
-        int     outfile;
-        char    *cmd_path;
+        int     fd_in;
+        int     fd_out;
+        char    *heredoc_limit;
         struct s_cmd    *next;
-        struct s_cmd    *prev;
+        //struct s_cmd    *prev;
         
 } t_cmd;
 
@@ -120,7 +127,7 @@ typedef struct s_data
 /*init.c*/
 
 int     init_struct(t_data *data, char **env);
-void    init_cmd(t_cmd *cmd);
+t_cmd   *init_command(void);
 
 /*free.c*/
 
@@ -141,10 +148,12 @@ void	push(t_token **head_ref, t_token *new);
 void    print_liste(t_token * head);
 void    test_parse(t_data *data);
 int     is_special_char(char *line, int i);
-
+void    if_redir(t_token *lexer);
 t_token *read_input(char *line);
 void    print_token(t_token **head);
 int     is_sep(char *line);
+void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line);
+int     ft_count_word(t_token  *lexer);
 
 
 int     check_open_quotes(const char *line);
@@ -160,6 +169,7 @@ char    *display_prompt(void);
 void    ft_basic_functions(char *line, char **argv);
 int     is_even(int num);
 int	ft_quotes(char *s);
+int     do_not_implement(char *s);
 void	display_env(char **env);
 int     is_space(char *line);
 

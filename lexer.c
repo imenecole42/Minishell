@@ -6,12 +6,11 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/28 00:06:26 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:02:18 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "struct.h"
 
 int is_special_char(char *line, int i)
 {
@@ -124,7 +123,7 @@ int save_redirection(t_token **lexer, char *line, int i, enum e_state status)
 
     j = i;
     if (is_special_char(line, i) == 2)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, REDIR_OUT, status));
+       ft_lstadd_back_token(lexer, create_token(line + (i++), 1, REDIR_OUT, status));
     else if (is_special_char(line, i) == 3)
         ft_lstadd_back_token(lexer, create_token(line + (i++), 1, REDIR_IN, status));
     else if (is_special_char(line, i) == 4)
@@ -184,11 +183,17 @@ t_token *read_input(char *line)
         printf("error: invalid characters found");
         // error function
     }
-    if (forbidden_series(line) == TRUE)
+    if (forbidden_series(line) > 0)
     {
-        printf("syntax error near unexpected token\n");
-        return (NULL);
-        //error function
+        if (forbidden_series(line) == 1)
+            {printf("syntax error near unexpected token\n");
+            return (NULL);}
+            //error function
+        else if (forbidden_series(line) == 2)
+        {
+            printf("tout ce qui n'est pas demande n'est pas a faire\n");
+            return (NULL);
+        }
     }
     while (line[i])
     {
@@ -197,9 +202,23 @@ t_token *read_input(char *line)
         //printf("read_input i:%d\n", i);
         //i++;
     }
-    //test = parse_quotes(lexer);
-    //printf("test = %s\n", test);
-    
+    if_redir(lexer);
     // free(line);
     return (lexer);
+}
+
+void if_redir(t_token *lexer)
+{
+    while (lexer)
+    {
+        if (lexer->type == REDIR_IN)
+            lexer->next->type = OPEN_FILE;
+        else if (lexer->type == REDIR_OUT)
+            lexer->next->type = EXIT_FILE;
+        else if (lexer->type == DREDIR_OUT)
+            lexer->next->type = EXIT_FILE_RET;
+        else if (lexer->type == HEREDOC)
+            lexer->next->type = LIMITER; 
+        lexer = lexer->next; 
+    }
 }
