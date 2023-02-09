@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:13 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/08 16:01:09 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:58:53 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 void    print_token(t_token **head)
 {
     t_token *cur;
-    static char *enumStrings[] = {"WORD", "WHITESPACE", "NEW_LINE", "PIPE", "HEREDOC", "ENV", "REDIR_IN", "REDIR_OUT", "DREDIR_OUT", "S_QUOTE", "D_QUOTE", "OPEN_FILE", "EXIT_FILE", "EXIT_FILE_RET", "LIMITER"};
+    static char *enumStrings[] = {"WORD", "WHITESPACE", "NEW_LINE", "PIPE", "HEREDOC", "ENV", "REDIR_IN", "REDIR_OUT", "DREDIR_OUT", "S_QUOTE", "D_QUOTE", "STD_IN", "TRUNC", "APPEND", "LIMITER"};
     static char *enumQuotes[] = {"DEFAULT", "SQUOTE", "DQUOTE"};
 
     cur = *head;

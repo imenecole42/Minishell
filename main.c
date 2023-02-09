@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/08 16:14:22 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:58:08 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ int main(int argc, char **argv, char **env)
                 return (1);
             data.token = read_input(data.line);
             print_token(&data.token);
-            data.cmds = init_command();
-            parse_cmd_table(data.token, &data.cmds);
+            //data.cmds = init_command();
+            //parse_cmd_table(data.token, &data.cmds);
+            //printf("fd_in = %i\n", data.cmds->fd_in);
+            //printf("fd_out = %i\n", data.cmds->fd_out);
             //test_parse(&data);
             //display_env(env);
             //ft_basic_functions(line, argv);

@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/08 16:02:18 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:25:25 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ int set_status(enum e_state status, char *str, int i)
         status = DEFAULT;
     else if (str[i] == '\"' && status == DQUOTE)
         status = DEFAULT;
+    //else if (str[i] == '\'' && status == DQUOTE)
+        //status = DEFAULT;
+    //else if (str[i] == '\'' && status == SQUOTE)
+        //status = DEFAULT;
     return (status);
 }
 
@@ -212,13 +216,16 @@ void if_redir(t_token *lexer)
     while (lexer)
     {
         if (lexer->type == REDIR_IN)
-            lexer->next->type = OPEN_FILE;
+            lexer->next->type = STD_IN;
         else if (lexer->type == REDIR_OUT)
-            lexer->next->type = EXIT_FILE;
+            lexer->next->type = TRUNC;
         else if (lexer->type == DREDIR_OUT)
-            lexer->next->type = EXIT_FILE_RET;
+            lexer->next->type = APPEND;
         else if (lexer->type == HEREDOC)
             lexer->next->type = LIMITER; 
         lexer = lexer->next; 
     }
 }
+
+
+.

@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:17:01 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/08 17:57:03 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:58:41 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cmd    *init_command(void)
     return (cmd_line);
 }
 
-/*void    handle_input(t_cmd  *cmd_line, char *filename)
+void    handle_input(t_cmd  *cmd_line, char *filename)
 {
     int fd_in;
 
@@ -64,16 +64,15 @@ void    handle_output_double(t_cmd  *cmd_line, char *filename)
     }
     cmd_line->fd_out = fd_out;
 }
-
-void    handle_heredoc(t_cmd *cmd_line, char *delimiter)
+/*void    handle_heredoc(t_cmd *cmd_line, char *delimiter)
 {
     int fd_in;
     char *filename;
     
     filename = NULL;
     
-}
-*/
+}*/
+
 void    parse_string(char *content,int len, char **argv, int i)
 {
     int j;
@@ -83,7 +82,7 @@ void    parse_string(char *content,int len, char **argv, int i)
     argv[i] = malloc(sizeof(char) * (len + 1));
     if (argv[i] == NULL)
         return ;
-    while (j < len)
+    while (j < len && content[j])
     {
         argv[i][j] = content[j];
         j++;
@@ -125,20 +124,28 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
                 i++;
             }
         }
-        /*if (cur->type == OPEN_FILE)
+        if (cur->type == STD_IN)
             handle_input(*cmd_line, cur->value);
-        if (cur->type == EXIT_FILE)
+        if (cur->type == TRUNC)
+        {
+            if((*cmd_line)->fd_out > 0)
+                close((*cmd_line)->fd_out);
             handle_output_simple(*cmd_line, cur->value);
-        if (cur->type == EXIT_FILE_RET)
+            //printf("fd_out = %i\n", (*cmd_line)->fd_out);
+        }
+        if (cur->type == APPEND)
+            {if ((*cmd_line)->fd_out > 0)
+                close((*cmd_line)->fd_out);
             handle_output_double(*cmd_line, cur->value);
-        if (cur->type == LIMITER)
+            //printf("fd_out = %i\n", (*cmd_line)->fd_out);}
+        /*if (cur->type == LIMITER)
             handle_heredoc(*cmd_line, cur->value);*/
         cur = cur->next;
         
     }
 
 }
-
+}
 int ft_count_word(t_token  *lexer)
 {
     t_token *tmp;

@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/08 17:23:17 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/09 12:04:06 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <string.h>
 #include <stdbool.h>
+#include <fcntl.h>
 //#include "Libft/get_next_line.h"
 #include "Libft/libft.h"
 #include "style.h"
@@ -72,9 +73,9 @@ enum    e_type
     DREDIR_OUT,
     S_QUOTE,
     D_QUOTE,
-    OPEN_FILE,
-    EXIT_FILE,
-    EXIT_FILE_RET,
+    STD_IN,
+    TRUNC,
+    APPEND,
     LIMITER,
 };
 
