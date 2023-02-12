@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/09 12:04:06 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:48:19 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,11 @@ typedef struct s_data
 {
         char    *line;
         char    **env;
+        char    **export;
         t_cmd   *cmds;
         t_token *token;
         int     exit_status;
-        //int     len;
+        int     argc;
 } t_data;
 
 /*init.c*/
@@ -146,7 +147,8 @@ int     is_ascii(char *s);
 t_token *create_token(char *value, int len, enum e_type type, enum e_state status);
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 void	push(t_token **head_ref, t_token *new);
-void    print_liste(t_token * head);
+void    print_liste(t_token *head);
+void    print_list(t_env *head);
 void    test_parse(t_data *data);
 int     is_special_char(char *line, int i);
 void    if_redir(t_token *lexer);
@@ -155,6 +157,7 @@ void    print_token(t_token **head);
 int     is_sep(char *line);
 void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line);
 int     ft_count_word(t_token  *lexer);
+void	redefine_status(t_token *lexer);
 
 
 int     check_open_quotes(const char *line);
@@ -173,5 +176,69 @@ int	ft_quotes(char *s);
 int     do_not_implement(char *s);
 void	display_env(char **env);
 int     is_space(char *line);
+char	*ft_strcpy(char *dest, char *src);
+int	ft_strcmp(char *s1, char *s2);
+int	ft_strlen_mat(char **tab);
+int    ft_isalnum_mini(int c);
 
+
+
+
+
+
+
+
+
+// typedef struct s_data
+// {
+//         char    **env;
+//         char    **export;
+//         int     argc;
+// } t_data;
+
+int  creat_env(char **env,t_data *mini);
+void realloc_env (t_data *mini,char *str);
+void ft_print_export(t_data *mini,char **argv);
+int  ft_env(t_data *mini);
+int  print_export(t_data *mini);
+int  creat_export(t_data *mini);
+void realloc_export(t_data *mini,char *str);
+void realloc_export_be(t_data *mini, char *str);
+void get_export(t_data *mini,char **argv);
+void get_env(t_data *mini,char **argv);
+int  print_export(t_data *mini);
+int	ft_echo(char **argv, t_data *mini);
+int  ft_check(char *argv);
+char *ft_get_add_export(t_data *mini,char *str);
+char *ft_get_add_env(t_data *mini,char *str);
+void ft_export(char **argv,t_data *mini);
+void ft_free(char **str);
+int  is_plus(char *str);
+int  is_export(char *str);
+char *strdup_plus(char *str);
+char *ft_select(char *str);
+char *ft_select1(char *str);
+char *ft_select2(char *str);
+void realloc_env_be(t_data *mini, char *str);
+void realloc_unset(t_data *mini,char *str);
+void ft_unset(t_data *mini,char *str);
+int strlen_env(t_data *mini,char *str);
+int	ft_pwd(t_data *mini);
+int	get_var(char *var, char **env);
+int	strjoint_env(char *var, char *path, t_data *mini);
+char	*get_home(char *var, t_data *mini);
+int	cd_new_path(char **cmd, int i, t_data *mini, char *newpath);
+int	ft_cd(char **cmd, int argc, t_data *mini);
+int	is_exit(char *str);
+void	ft_many_arg(t_data *mini);
+void	ft_exit(t_data *mini, char **cmd);
+int	is_builtin(t_data *mini, char **argv);
+int	builtin_env(char **argv);
+void 	util_unset(t_data *mini,int i,int j,char **temp);
+char *get_var_echo(char *str);
+char *get_val_echo(char *str);
+char *check_var(char *str,t_data *mini);
+char *get_val_echo_space(char *str);
+int ft_print_var_quote(char *str,t_data *mini);
+int ft_print_var_sans_quote(char *str,t_data *mini);
 #endif

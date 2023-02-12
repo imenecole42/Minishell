@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/09 16:25:25 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/11 14:55:49 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int save_dquotes(t_token **lexer, char *line, enum e_state status)
     int i;
 
     i = 0;
-    //printf("%s\n", line);
     while (is_d_quotes(line, i) == FALSE)
     {
         i++;
@@ -112,7 +111,6 @@ int save_squotes(t_token **lexer, char *line, enum e_state status)
     int i;
 
     i = 0;
-    //printf("%s\n", line);
     while (is_s_quotes(line, i) == FALSE)
     {
         i++;
@@ -150,22 +148,22 @@ int tokenizer(t_token **lexer, char *line, int i, enum e_state status)
     else if (is_special_char(line, i) == 1)
         ft_lstadd_back_token(lexer, create_token(line + (i++), 1, PIPE, status));
     else if (is_special_char(line, i) == 9)
-        i++;
-        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, WHITESPACE, status));
+        //i++;
+        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, WHITESPACE, status));
     else if (is_special_char(line, i) > 1 && is_special_char(line, i) < 6)
         i += save_redirection(lexer, line, i, status);
     else if (is_special_char(line, i) == 8)
         ft_lstadd_back_token(lexer, create_token(line + (i++), 1, ENV, status));
     else if (is_special_char(line, i) == 6)
-        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, S_QUOTE, status));
-        {i++;
-        i += save_squotes(lexer, line + i, status);
-        i++;}
+        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, S_QUOTE, status));
+        //{i++;
+        //i += save_squotes(lexer, line + i, status);
+        //i++;}
     else if (is_special_char(line, i) == 7)
-        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, D_QUOTE, status));
-        {i++;
-        i += save_dquotes(lexer, line + i, status);
-        i++;}
+        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, D_QUOTE, status));
+        //{i++;
+        //i += save_dquotes(lexer, line + i, status);
+        //i++;}
         
     return (i);
 }
@@ -175,8 +173,6 @@ t_token *read_input(char *line)
 {
     int i;
     t_token *lexer;
-    //char    *test = NULL;
-    //test = malloc(sizeof(char) * 1000);
     enum e_state status;
 
     i = 0;
@@ -203,17 +199,17 @@ t_token *read_input(char *line)
     {
         status = set_status(status, line, i);
         i = tokenizer(&lexer, line, i, status);
-        //printf("read_input i:%d\n", i);
-        //i++;
     }
     if_redir(lexer);
-    // free(line);
+    redefine_status(lexer);
+    free(line);
+    //printf("%s\n", lexer->value);
     return (lexer);
 }
 
 void if_redir(t_token *lexer)
 {
-    while (lexer)
+    while (lexer && lexer->next)
     {
         if (lexer->type == REDIR_IN)
             lexer->next->type = STD_IN;
@@ -227,5 +223,14 @@ void if_redir(t_token *lexer)
     }
 }
 
-
-.
+void redefine_status(t_token *lexer)
+{
+    while (lexer && lexer->next)
+    {
+        if (lexer->qstatus == DQUOTE && lexer->next->type == D_QUOTE)
+            lexer->next->qstatus = DQUOTE;
+        else if (lexer->qstatus == SQUOTE && lexer->next->type == S_QUOTE)
+            lexer->next->qstatus = SQUOTE;
+        lexer = lexer->next;
+    }
+}

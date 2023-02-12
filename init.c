@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:44:49 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/08 09:33:17 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:20:38 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
     while (env[++i] != NULL)
     {
         size++;
-        //printf(BOLD_PURPLE"env[%d] == %s\n"RESET, i, env[i]);
+        printf(BOLD_PURPLE"env[%d] == %s\n"RESET, i, env[i]);
     }
     data->env = ft_calloc(size + 1, sizeof(char**));
     if (!data->env)
@@ -39,18 +39,17 @@
     while (data->env[++i] != NULL)
     {
         size++;
-        //printf(BOLD_RED"env[%d] == %s\n"RESET, i, data->env[i]);
+        printf(BOLD_RED"env[%d] == %s\n"RESET, i, data->env[i]);
     }
-    return(1);
-}*/
+    */
 
 int    init_struct(t_data *data, char **env)
 {
-    //int mode;
+    // int mode;
 
-    //mode = isatty(STDIN_FILENO);
-    //if (mode != TRUE)
-        //(EXIT_FAILURE); // faire fonction pour quitter proprement
+    // mode = isatty(STDIN_FILENO);
+    // if (mode != TRUE)
+    //     (EXIT_FAILURE); // faire fonction pour quitter proprement
     //ft_bzero(data, sizeof(t_data));
     // if (dup_env(data, env) == FALSE)
     // {
@@ -59,9 +58,11 @@ int    init_struct(t_data *data, char **env)
     // }
     (void) env;
     data->line = NULL;
+    data->export = NULL;
     data->cmds = NULL;
     data->env = NULL;
     data->exit_status = 0;
+    data->argc = 0;
     data->token = NULL;
     return(1);
 }
