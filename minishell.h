@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/12 15:48:19 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:54:08 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ char	*ft_strcpy(char *dest, char *src);
 int	ft_strcmp(char *s1, char *s2);
 int	ft_strlen_mat(char **tab);
 int    ft_isalnum_mini(int c);
+void    print_simple(char *str);
+void    replace(char *str, char **env);
 
 
 

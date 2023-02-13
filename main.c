@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/12 18:07:08 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:55:05 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int main(int argc, char **argv, char **env)
 {
     (void)  argv;
     t_data  data;
+    //char    *check;
 
     if (argc == 1)
     {
@@ -93,8 +94,9 @@ int main(int argc, char **argv, char **env)
             data.line = display_prompt();
             if (check_input(&data) == FALSE)
                 return (1);
-            data.token = read_input(data.line);
-            print_token(&data.token);
+            replace(data.line, data.env);
+            //data.token = read_input(data.line);
+            //print_token(&data.token);
             //display_env(env);
             //data.cmds = init_command();
             //parse_cmd_table(data.token, &data.cmds);

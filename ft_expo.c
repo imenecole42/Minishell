@@ -1,3 +1,5 @@
+
+
 #include "minishell.h"
 
 char *get_var_echo(char *str)
