@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/13 16:55:05 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:34:17 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void    sig_handler(int signum)
         //rl_replace_line("", 0);
         rl_redisplay();
     }
+
 }
 
 char    *display_prompt(void)
@@ -30,6 +31,8 @@ char    *display_prompt(void)
     static char *prompt;
 
     prompt = NULL;
+    // signal(SIGINT, sig_handler);
+    // signal(SIGQUIT,SIG_IGN);
     if (prompt)
     {
         free(prompt);
@@ -89,14 +92,15 @@ int main(int argc, char **argv, char **env)
             return(1);  //data exit status = 1
         while (1)
         {
-            signal(SIGINT, sig_handler);
-            signal(SIGQUIT, SIG_IGN);
+            // signal(SIGINT, sig_handler);
+            // signal(SIGQUIT,SIG_IGN);
             data.line = display_prompt();
             if (check_input(&data) == FALSE)
                 return (1);
-            replace(data.line, data.env);
-            //data.token = read_input(data.line);
-            //print_token(&data.token);
+            //expand_finder(data.line);
+            replace(&data);
+            data.token = read_input(data.line);
+            print_token(&data.token);
             //display_env(env);
             //data.cmds = init_command();
             //parse_cmd_table(data.token, &data.cmds);

@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:44:49 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/13 14:29:23 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:34:51 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int     dup_env(t_data *data, char **env)
     while (env[++i] != NULL)
     {
         size++;
-        printf(BOLD_PURPLE"env[%d] == %s\n"RESET, i, env[i]);
+        //printf(BOLD_PURPLE"env[%d] == %s\n"RESET, i, env[i]);
     }
     data->env = ft_calloc(size + 1, sizeof(char**));
     if (!data->env)
@@ -39,7 +39,7 @@ int     dup_env(t_data *data, char **env)
     while (data->env[++i] != NULL)
     {
         size++;
-        printf(BOLD_RED"env[%d] == %s\n"RESET, i, data->env[i]);
+        //printf(BOLD_RED"env[%d] == %s\n"RESET, i, data->env[i]);
     }
     return(1);
 }
@@ -52,18 +52,18 @@ int    init_struct(t_data *data, char **env)
     // if (mode != TRUE)
     //     (EXIT_FAILURE); // faire fonction pour quitter proprement
     ft_bzero(data, sizeof(t_data));
+    //(void) env;
+    data->line = NULL;
+    data->export = NULL;
+    data->cmds = NULL;
+    data->env = NULL;
+    data->exit_status = 0;
+    data->argc = 0;
+    data->token = NULL;
     if (dup_env(data, env) == FALSE)
     {
         printf("error : initialization of environment");
         return (0);
     }
-    //(void) env;
-    data->line = NULL;
-    data->export = NULL;
-    data->cmds = NULL;
-    //data->env = NULL;
-    data->exit_status = 0;
-    data->argc = 0;
-    data->token = NULL;
     return(1);
 }

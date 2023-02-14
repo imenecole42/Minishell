@@ -5,7 +5,7 @@ NAME := minishell.a
 SOFT_NAME := minishell
 
 CC := gcc
-FLAGS := -Wall -Wextra -Werror -lreadline -g3 -I includes/
+FLAGS := -Wall -Wextra -Werror -lreadline -g -I includes/
 SRC_DIR := sources/
 OBJ_DIR := objects/
 AR := ar rc

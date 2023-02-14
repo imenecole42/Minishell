@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/13 16:54:08 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:12:59 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 
 #define TRUE 1
 #define FALSE 0
+
+extern int      g_exit_code;
 
 typedef struct s_env
 {
@@ -179,14 +181,11 @@ int     is_space(char *line);
 char	*ft_strcpy(char *dest, char *src);
 int	ft_strcmp(char *s1, char *s2);
 int	ft_strlen_mat(char **tab);
-int    ft_isalnum_mini(int c);
+int     ft_isalnum_mini(int c);
 void    print_simple(char *str);
-void    replace(char *str, char **env);
-
-
-
-
-
+void    replace(t_data *data);
+int     expand_finder(char *str);
+char	*ft_strjoin_char(char const *s1, char s2);
 
 
 
@@ -207,7 +206,7 @@ int  creat_export(t_data *mini);
 void realloc_export(t_data *mini,char *str);
 void realloc_export_be(t_data *mini, char *str);
 void get_export(t_data *mini,char **argv);
-void get_env(t_data *mini,char **argv);
+void get_env(t_data *mini,char *dest);
 int  print_export(t_data *mini);
 int	ft_echo(char **argv, t_data *mini);
 int  ft_check(char *argv);

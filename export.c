@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imraoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 15:13:44 by imraoui           #+#    #+#             */
-/*   Updated: 2023/02/03 15:22:39 by imraoui          ###   ########.fr       */
+/*   Updated: 2023/02/14 12:19:54 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,21 @@ char	*ft_get_add_env(t_data *mini, char *str)
 	return (mini->env[i]);
 }
 
-void	get_env(t_data *mini, char **argv)
+void	get_env(t_data *mini, char *dest)
 {
 	int	i;
 
 	i = 0;
-	while (mini->env[i] && (!ft_strnstr(mini->env[i], ft_select(argv[2]),
-				ft_strlen(ft_select(argv[2])))))
+	while (mini->env[i] && (!ft_strnstr(mini->env[i], ft_select(dest),
+				ft_strlen(ft_select(dest)))))
 		i++;
 	if (mini->env[i + 1] == 0)
-		realloc_env(mini, argv[2]);
+		realloc_env(mini, dest);
 	else
-		realloc_env_be(mini, argv[2]);
+		realloc_env_be(mini, dest);
 }
 
-void	ft_export(char **argv, t_data *mini)
+/*void	ft_export(char **argv, t_data *mini)
 {
 	if (mini->argc == 2)
 		print_export(mini);
@@ -103,4 +103,4 @@ void	ft_export(char **argv, t_data *mini)
 		}
 	}
 	return ;
-}
+}*/
