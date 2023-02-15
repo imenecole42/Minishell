@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:46:37 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/14 17:39:35 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:32:16 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,45 +67,74 @@ char	*ft_strjoin_char(char const *s1, char s2)
 	return (ret);
 }
 
+char *env_finder(char *line, int start, int end)
+{
+    int i;
+    char *str;
+    char *dup;
+
+    i = 0;
+    str = NULL;
+    dup = ft_strdup(line);
+    str = malloc(sizeof(char) * (end - start + 1));
+    str[(end - start)] = '\0';
+    while (start < end)
+    {
+        str[i] = dup[start];
+        i++;
+        start++;
+    }
+    // str[start] = '\0';
+    free(dup);
+    return(str);
+}
+
 void    replace(t_data *data)
 { 
     int dollar;
     int i;
+    int start;
+    int end;
     char *env;
     char *new;
 
     i = 0;
+    start = 0;
+    end = 0;
     dollar = 0;
     env = NULL;
     new = NULL;
-    while(data->line[i]){
-       // printf("i = %d\n", i);
-        while (data->line[i] == '$')
+    while(data->line[i])
+    {
+        while (data->line[i] == '$' && data->line[i + 1])
         {
             i++;
             dollar = 1;
-            //printf("i = %d\n", i);
-            //printf("dollar = %d\n", dollar);
         }
         if (dollar == 1)
         {
-            while (ft_isalnum_mini(data->line[i]))
+            start = i;
+            while (ft_isalnum_mini(data->line[i]) && data->line[i])
             {
-                env = ft_strjoin_char(env, data->line[i]);
+                //env = ft_strjoin_char(env, data->line[i]);
                 i++;
             }
+            printf("c = %c\n", data->line[i]);
+            end = i;
+            env = env_finder(data->line, start, end);
+            //copy_env = ft_strdup(env);
             env = check_var(env, data);
-            if(env){
-            //     printf("%s\n", env);
+            if(env)
+            {
+                //printf("%s\n", env);
                 env = ft_select1(env);
                 //printf("%s\n", env);
                 new = ft_strjoin(new, env);
+                //free(env);
                 //printf("%s\n", new);
                 
-                }
-                
+            }
             dollar = 0;
-            
             // else
             // {
 
@@ -116,10 +145,12 @@ void    replace(t_data *data)
         }
         else
             new = ft_strjoin_char(new, data->line[i]);
-        i++;
+        if (data->line[i] != '$')
+            i++; 
       }
-        data->line = ft_strdup(new);
-        free(new);
+    data->line = ft_strdup(new);
+    printf("%s\n", data->line);
+    free(new);
     }
  
 

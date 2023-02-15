@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/14 17:34:17 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:14:07 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int main(int argc, char **argv, char **env)
 {
     (void)  argv;
     t_data  data;
-    //char    *check;
 
     if (argc == 1)
     {
@@ -94,7 +93,7 @@ int main(int argc, char **argv, char **env)
         {
             // signal(SIGINT, sig_handler);
             // signal(SIGQUIT,SIG_IGN);
-            data.line = display_prompt();
+            data.line = ft_strdup(display_prompt());
             if (check_input(&data) == FALSE)
                 return (1);
             //expand_finder(data.line);

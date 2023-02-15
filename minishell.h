@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/14 12:12:59 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:17:55 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,10 @@ int	ft_strlen_mat(char **tab);
 int     ft_isalnum_mini(int c);
 void    print_simple(char *str);
 void    replace(t_data *data);
+int     replacer(char *line, int pos);
 int     expand_finder(char *str);
-char	*ft_strjoin_char(char const *s1, char s2);
+//char	*ft_strjoin_char(char const *s1, char s2);
+char    *env_finder(char *line, int start, int end);
 
 
 

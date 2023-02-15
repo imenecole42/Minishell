@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:44:49 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/14 15:34:51 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:53:31 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ int    init_struct(t_data *data, char **env)
     // mode = isatty(STDIN_FILENO);
     // if (mode != TRUE)
     //     (EXIT_FAILURE); // faire fonction pour quitter proprement
-    ft_bzero(data, sizeof(t_data));
+    //data = malloc(sizeof(data));
+    //ft_bzero(data, sizeof(t_data));
     //(void) env;
     data->line = NULL;
-    data->export = NULL;
+    //data->export = NULL;
     data->cmds = NULL;
     data->env = NULL;
     data->exit_status = 0;
