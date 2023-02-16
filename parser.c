@@ -78,8 +78,6 @@ void    parse_string(char *content,int len, char **argv, int i)
     int j;
     
     j = 0;
-    i=0;
-    //printf("i : %i\n", i);
     argv[i] = malloc(sizeof(char) * (len + 1));
     if (argv[i] == NULL)
         return ;
@@ -87,11 +85,9 @@ void    parse_string(char *content,int len, char **argv, int i)
     {
         
         argv[i][j] = content[j];
-        //printf("%c",argv[i][j]);
         j++;
     }
     argv[i][j] = '\0';
-    //printf("argv i j : %s\n", argv[i]);
     return ;
 }
 
@@ -112,6 +108,19 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
             (*cmd_line) = (*cmd_line)->next;
             i = 0;
         }
+        else if (cur->type == STD_IN)
+            handle_input(*cmd_line, cur->value);
+        else if (cur->type == TRUNC)
+        {
+            if((*cmd_line)->fd_out > 0)
+                close((*cmd_line)->fd_out);
+            handle_output_simple(*cmd_line, cur->value);
+            //printf("fd_out = %i\n", (*cmd_line)->fd_out);
+        }
+        else if (cur->type == APPEND)
+            {if ((*cmd_line)->fd_out > 0)
+                close((*cmd_line)->fd_out);
+            handle_output_double(*cmd_line, cur->value);}
         else
         {
             (*cmd_line)->cmd = malloc(sizeof(char *) * (count_word + 1));
@@ -120,33 +129,20 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
             if (cur->type == WORD)
             {
                 parse_string(cur->value, cur->len, (*cmd_line)->cmd, i);
-                // printf("************************************************\n");
-                // printf("*argv[%i] :", i);
-                // printf("%s\n", (*cmd_line)->cmd[i]);
-                // printf("************************************************\n");
+                printf("************************************************\n");
+                printf("*argv[%i] :", i);
+                printf("%s\n", (*cmd_line)->cmd[i]);
+                printf("************************************************\n");
                 i++;
             }
         }
-        if (cur->type == STD_IN)
-            handle_input(*cmd_line, cur->value);
-        if (cur->type == TRUNC)
-        {
-            if((*cmd_line)->fd_out > 0)
-                close((*cmd_line)->fd_out);
-            handle_output_simple(*cmd_line, cur->value);
-            //printf("fd_out = %i\n", (*cmd_line)->fd_out);
-        }
-        if (cur->type == APPEND)
-            {if ((*cmd_line)->fd_out > 0)
-                close((*cmd_line)->fd_out);
-            handle_output_double(*cmd_line, cur->value);
+        cur = cur->next;
             //printf("fd_out = %i\n", (*cmd_line)->fd_out);}
         /*if (cur->type == LIMITER)
             handle_heredoc(*cmd_line, cur->value);*/
-        cur = cur->next;
     }
 }
-}
+
 int ft_count_word(t_token  *lexer)
 {
     t_token *tmp;
