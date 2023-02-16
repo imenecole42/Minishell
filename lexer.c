@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/11 14:55:49 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:18:15 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,22 +148,23 @@ int tokenizer(t_token **lexer, char *line, int i, enum e_state status)
     else if (is_special_char(line, i) == 1)
         ft_lstadd_back_token(lexer, create_token(line + (i++), 1, PIPE, status));
     else if (is_special_char(line, i) == 9)
-        //i++;
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, WHITESPACE, status));
+        i++;
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, WHITESPACE, status));
     else if (is_special_char(line, i) > 1 && is_special_char(line, i) < 6)
         i += save_redirection(lexer, line, i, status);
     else if (is_special_char(line, i) == 8)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, ENV, status));
+        i++;
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, ENV, status));
     else if (is_special_char(line, i) == 6)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, S_QUOTE, status));
-        //{i++;
-        //i += save_squotes(lexer, line + i, status);
-        //i++;}
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, S_QUOTE, status));
+        {i++;
+        i += save_squotes(lexer, line + i, status);
+        i++;}
     else if (is_special_char(line, i) == 7)
-        ft_lstadd_back_token(lexer, create_token(line + (i++), 1, D_QUOTE, status));
-        //{i++;
-        //i += save_dquotes(lexer, line + i, status);
-        //i++;}
+        //ft_lstadd_back_token(lexer, create_token(line + (i++), 1, D_QUOTE, status));
+        {i++;
+        i += save_dquotes(lexer, line + i, status);
+        i++;}
         
     return (i);
 }

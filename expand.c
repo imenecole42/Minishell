@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:46:37 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/15 17:32:16 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:45:45 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char *env_finder(char *line, int start, int end)
         i++;
         start++;
     }
-    // str[start] = '\0';
     free(dup);
     return(str);
 }
@@ -106,7 +105,7 @@ void    replace(t_data *data)
     new = NULL;
     while(data->line[i])
     {
-        while (data->line[i] == '$' && data->line[i + 1])
+        while (data->line[i] == '$' && data->line[i])
         {
             i++;
             dollar = 1;
@@ -116,36 +115,23 @@ void    replace(t_data *data)
             start = i;
             while (ft_isalnum_mini(data->line[i]) && data->line[i])
             {
-                //env = ft_strjoin_char(env, data->line[i]);
                 i++;
             }
             printf("c = %c\n", data->line[i]);
+            printf("i = %d\n", i);
             end = i;
             env = env_finder(data->line, start, end);
-            //copy_env = ft_strdup(env);
             env = check_var(env, data);
             if(env)
             {
-                //printf("%s\n", env);
                 env = ft_select1(env);
-                //printf("%s\n", env);
                 new = ft_strjoin(new, env);
-                //free(env);
-                //printf("%s\n", new);
-                
+                free(env);
             }
             dollar = 0;
-            // else
-            // {
-
-            //env = check_var(env, data);
-                //printf("%s\n", env);
-                // new = ft_strjoin(new, data->line);
-                // free(env);
         }
-        else
-            new = ft_strjoin_char(new, data->line[i]);
-        if (data->line[i] != '$')
+        new = ft_strjoin_char(new, data->line[i]);
+        if (data->line[i] != '$' && data->line[i])
             i++; 
       }
     data->line = ft_strdup(new);

@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:17:01 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/09 15:58:41 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:57:48 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,16 @@ void    parse_string(char *content,int len, char **argv, int i)
     int j;
     
     j = 0;
+    i=0;
     //printf("i : %i\n", i);
     argv[i] = malloc(sizeof(char) * (len + 1));
     if (argv[i] == NULL)
         return ;
-    while (j < len && content[j])
+    while (j < len && content[j] && argv)
     {
+        
         argv[i][j] = content[j];
+        //printf("%c",argv[i][j]);
         j++;
     }
     argv[i][j] = '\0';
@@ -117,10 +120,10 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
             if (cur->type == WORD)
             {
                 parse_string(cur->value, cur->len, (*cmd_line)->cmd, i);
-                printf("************************************************\n");
-                printf("*argv[%i] :", i);
-                printf("%s\n", (*cmd_line)->cmd[i]);
-                printf("************************************************\n");
+                // printf("************************************************\n");
+                // printf("*argv[%i] :", i);
+                // printf("%s\n", (*cmd_line)->cmd[i]);
+                // printf("************************************************\n");
                 i++;
             }
         }
@@ -141,9 +144,7 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
         /*if (cur->type == LIMITER)
             handle_heredoc(*cmd_line, cur->value);*/
         cur = cur->next;
-        
     }
-
 }
 }
 int ft_count_word(t_token  *lexer)

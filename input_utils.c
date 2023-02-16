@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 11:08:51 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/12 13:13:53 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:06:03 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	ft_strlen_mat(char **tab)
 
 int    ft_isalnum_mini(int c)
 {
-    if (ft_isalpha(c) || ft_isdigit(c) || c =='_')
+    if (ft_isalpha(c) || ft_isdigit(c) || c == '_')
         return (1);
     return (0);
 }
