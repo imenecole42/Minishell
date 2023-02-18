@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:46:37 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/16 15:45:45 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/18 18:54:08 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
         dest[i]='\0';
         return (dest);
     }*/
-    
+
 char	*ft_strjoin_char(char const *s1, char s2)
 {
 	char	*ret;
@@ -107,8 +107,13 @@ void    replace(t_data *data)
     {
         while (data->line[i] == '$' && data->line[i])
         {
+            if(check_open_quotes_expand(data->line, i))
+            {
+                dollar = 1;
+            }
+            else 
+                new = ft_strjoin_char(new, data->line[i]);
             i++;
-            dollar = 1;
         }
         if (dollar == 1)
         {
@@ -117,8 +122,8 @@ void    replace(t_data *data)
             {
                 i++;
             }
-            printf("c = %c\n", data->line[i]);
-            printf("i = %d\n", i);
+            // printf("c = %c\n", data->line[i]);
+            // printf("i = %d\n", i);
             end = i;
             env = env_finder(data->line, start, end);
             env = check_var(env, data);
@@ -133,7 +138,7 @@ void    replace(t_data *data)
         new = ft_strjoin_char(new, data->line[i]);
         if (data->line[i] != '$' && data->line[i])
             i++; 
-      }
+    }
     data->line = ft_strdup(new);
     printf("%s\n", data->line);
     free(new);

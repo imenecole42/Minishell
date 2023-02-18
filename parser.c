@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:17:01 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/16 16:57:48 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:23:48 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ t_cmd    *init_command(void)
         cmd_line->next = NULL;
         cmd_line->cmd = NULL;
         cmd_line->heredoc_limit = NULL;
+        cmd_line->i = 0;
+        cmd_line->here_doc = 0;
+        cmd_line->nbr_cmd = 0;
+        cmd_line->nbr_pipe = 0;
         cmd_line->fd_in = -1;
         cmd_line->fd_out = -1;
     }
@@ -91,13 +95,17 @@ void    parse_string(char *content,int len, char **argv, int i)
     return ;
 }
 
+
+
 void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
 {
     t_token *cur;
     int i;
     int count_word;
+    int pipe;
     
     cur = lexer;
+    pipe = 0;
     i = 0;
     count_word = ft_count_word(cur);
     while (cur)
@@ -106,6 +114,7 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
         {
             (*cmd_line)->next = init_command();
             (*cmd_line) = (*cmd_line)->next;
+            pipe++;
             i = 0;
         }
         else if (cur->type == STD_IN)
@@ -141,6 +150,7 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
         /*if (cur->type == LIMITER)
             handle_heredoc(*cmd_line, cur->value);*/
     }
+    printf("pipe = %d\n", pipe);
 }
 
 int ft_count_word(t_token  *lexer)

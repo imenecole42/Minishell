@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/15 15:17:55 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:42:40 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,14 @@ typedef struct s_parse
 typedef struct s_cmd
 {
         char    **cmd;
+        char    *heredoc_limit;
         int     fd_in;
         int     fd_out;
-        char    *heredoc_limit;
+        int     nbr_cmd;
+        int     here_doc;
+        int     i;
+        int     nbr_pipe;
+        pid_t   *pid;
         struct s_cmd    *next;
         //struct s_cmd    *prev;
         
@@ -163,6 +168,7 @@ void	redefine_status(t_token *lexer);
 
 
 int     check_open_quotes(const char *line);
+int     check_open_quotes_expand(const char *line, int pos);
 int     open_quotes(const char *line, int pos);
 int     begin_sep_error(char *line);
 int     end_sep_error(char *line);
@@ -188,6 +194,7 @@ int     replacer(char *line, int pos);
 int     expand_finder(char *str);
 //char	*ft_strjoin_char(char const *s1, char s2);
 char    *env_finder(char *line, int start, int end);
+int     count_nodes(t_cmd *cmd_table);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:36 by hferjani          #+#    #+#             */
-/*   Updated: 2023/01/21 22:44:19 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/18 18:20:07 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,28 @@ int is_space(char *s)
     return (0);
 }
 
-/*echint is_sep(char *line)
-{
-    int i;
 
-    i = 0;
-    if (line[i] == '|' || line[i] == '>' || line[i] == '<')
-        return (1);
-    return (0);
-}
-
-
-int check_open_quotes(const char *line)
+int check_open_quotes_expand(const char *line, int pos)
 {
     int open_dquotes;
     int open_squotes;
+    int i;
 
+    i = 0;
     open_dquotes = 0;
     open_squotes = 0;
-    while (*line)
+    printf("pos = %d\n", pos);
+    while (line[i] && i < pos)
     {
-        if (*line == 34 && is_even(open_squotes))
+        if (line[i] == 34 && is_even(open_squotes))
             open_dquotes++;
-        else if (*line == 39 && is_even(open_dquotes))
+        else if (line[i] == 39 && is_even(open_dquotes))
             open_squotes++;
-        line++;
+        i++;
     }
-    if (!is_even(open_dquotes) || !is_even(open_squotes))
-        return(1);
-    return(0);
-}*/
+    printf("i = %d\n", i);
+    printf("simple quotes ouvertes = %d\n", open_squotes);
+    if (!is_even(open_squotes))
+        return(0);
+    return(1);
+}
