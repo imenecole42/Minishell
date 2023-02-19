@@ -96,11 +96,9 @@ int main(int argc, char **argv, char **env)
             data.line = ft_strdup(display_prompt());
             if (check_input(&data) == FALSE)
                 return (1);
-            //expand_finder(data.line);
             replace(&data);
             data.token = read_input(data.line);
             print_token(&data.token);
-            //display_env(env);
             data.cmds = init_command();
             parse_cmd_table(data.token, &data.cmds);
             //printf("fd_in = %i\n", data.cmds->fd_in);

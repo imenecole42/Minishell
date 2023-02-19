@@ -195,6 +195,7 @@ int     expand_finder(char *str);
 //char	*ft_strjoin_char(char const *s1, char s2);
 char    *env_finder(char *line, int start, int end);
 int     count_nodes(t_cmd *cmd_table);
+void    init_expand_variables(int i, int start, int end, int dollar);
 
 
 

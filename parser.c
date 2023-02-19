@@ -68,6 +68,7 @@ void    handle_output_double(t_cmd  *cmd_line, char *filename)
     }
     cmd_line->fd_out = fd_out;
 }
+
 /*void    handle_heredoc(t_cmd *cmd_line, char *delimiter)
 {
     int fd_in;
@@ -124,12 +125,15 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
             if((*cmd_line)->fd_out > 0)
                 close((*cmd_line)->fd_out);
             handle_output_simple(*cmd_line, cur->value);
-            //printf("fd_out = %i\n", (*cmd_line)->fd_out);
         }
         else if (cur->type == APPEND)
             {if ((*cmd_line)->fd_out > 0)
                 close((*cmd_line)->fd_out);
             handle_output_double(*cmd_line, cur->value);}
+        else if (cur->type == LIMITER)
+        {
+            
+        }
         else
         {
             (*cmd_line)->cmd = malloc(sizeof(char *) * (count_word + 1));
@@ -146,7 +150,6 @@ void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line)
             }
         }
         cur = cur->next;
-            //printf("fd_out = %i\n", (*cmd_line)->fd_out);}
         /*if (cur->type == LIMITER)
             handle_heredoc(*cmd_line, cur->value);*/
     }

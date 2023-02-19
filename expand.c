@@ -11,39 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-    
-/*char *str_to_find(char *str)
-{
-    int i;
-    int start;
-    int end;
-    char    *dest;
-    
-    i = 0;
-    
-        // flag_quotes = open_quotes(str, i);
-        // printf("%d\n",flag_quotes);
-        while (str[i] == '$')
-            i++;
-        start = i;
-        printf("%d\n", start);
-        while (str[i] && ft_isalnum_mini(str[i]))
-            i++;
-        end = i;
-        printf("%d\n", end);
-        i = 0;
-        dest = malloc(sizeof(char) * ((end - start) + 1));
-        if (!dest)
-            return (NULL);
-        while (start<end && ft_isalnum_mini(str[start]))
-        {
-            dest[i] = str[start];
-            i++;
-            start++;
-        }
-        dest[i]='\0';
-        return (dest);
-    }*/
 
 char	*ft_strjoin_char(char const *s1, char s2)
 {
@@ -108,9 +75,7 @@ void    replace(t_data *data)
         while (data->line[i] == '$' && data->line[i])
         {
             if(check_open_quotes_expand(data->line, i))
-            {
                 dollar = 1;
-            }
             else 
                 new = ft_strjoin_char(new, data->line[i]);
             i++;
@@ -119,11 +84,7 @@ void    replace(t_data *data)
         {
             start = i;
             while (ft_isalnum_mini(data->line[i]) && data->line[i])
-            {
                 i++;
-            }
-            // printf("c = %c\n", data->line[i]);
-            // printf("i = %d\n", i);
             end = i;
             env = env_finder(data->line, start, end);
             env = check_var(env, data);
