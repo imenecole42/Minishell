@@ -116,7 +116,22 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	last->next = new;
 }
 
-//void    ft_lstadd_back_command()
+void    ft_lstadd_back_command(t_cmd **lst, t_cmd *new)
+{
+    t_cmd   *last;
+
+    last = *lst;
+    if(*lst == NULL)
+    {
+        *lst = new;
+        return ;
+    }
+    while (last->next != NULL)
+    {
+        last = last->next;
+        last->next = new;
+    }
+}
 
 
 

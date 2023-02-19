@@ -162,7 +162,8 @@ void    if_redir(t_token *lexer);
 t_token *read_input(char *line);
 void    print_token(t_token **head);
 int     is_sep(char *line);
-void    parse_cmd_table(t_token *lexer, t_cmd **cmd_line);
+t_cmd   *parse_cmd_table(t_token *lexer);
+void    ft_lstadd_back_command(t_cmd **lst, t_cmd *new);
 int     ft_count_word(t_token  *lexer);
 void	redefine_status(t_token *lexer);
 

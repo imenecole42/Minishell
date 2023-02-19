@@ -99,11 +99,11 @@ int main(int argc, char **argv, char **env)
             replace(&data);
             data.token = read_input(data.line);
             print_token(&data.token);
-            data.cmds = init_command();
-            parse_cmd_table(data.token, &data.cmds);
-            //printf("fd_in = %i\n", data.cmds->fd_in);
-            //printf("fd_out = %i\n", data.cmds->fd_out);
-            //test_parse(&data);
+            //data.cmds = init_command();
+            data.cmds = parse_cmd_table(data.token);
+            printf("ici c'est le main[0] = %s\n", data.cmds->cmd[0]);
+            printf("ici c'est le main = %s\n", data.cmds->cmd[1]);
+            printf("ici c'est le main = %s\n", data.cmds->cmd[2]);
             //ft_basic_functions(line, argv);
             //read_command(command, parameters); // read input from terminal
         //if (fork() != 0) //parent
