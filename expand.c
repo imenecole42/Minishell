@@ -6,11 +6,12 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:46:37 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/18 18:54:08 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:00:28 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <string.h>
 
 char	*ft_strjoin_char(char const *s1, char s2)
 {

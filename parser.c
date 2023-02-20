@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:17:01 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/18 15:23:48 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:16:45 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_cmd    *init_command(void)
         cmd_line->cmd = NULL;
         cmd_line->heredoc_limit = NULL;
         cmd_line->i = 0;
+        cmd_line->argc = 0;
         cmd_line->here_doc = 0;
         cmd_line->nbr_cmd = 0;
         cmd_line->nbr_pipe = 0;
@@ -110,10 +111,11 @@ t_cmd    *parse_cmd_table(t_token *lexer)
     ret = init_command();
     pipe = 0;
     i = 0;
-    // count_word = ft_count_word(cur);
-    // ret->cmd = malloc(sizeof(char *) * (count_word + 1));
-    // if(ret->cmd == NULL)
-    //     return (NULL);
+    count_word = ft_count_word(cur);
+    printf("count word original:%d\n",count_word);
+    ret->cmd = malloc(sizeof(char *) * (count_word + 1));
+    if(ret->cmd == NULL)
+        return (NULL);
     while (cur)
     {
         if (cur->type == PIPE)
@@ -121,6 +123,11 @@ t_cmd    *parse_cmd_table(t_token *lexer)
             ft_lstadd_back_command(&ret, init_command());
             pipe++;
             i = 0;
+            count_word = ft_count_word(cur->next);
+            printf("count word pipe:%d\n",count_word);
+            ret->cmd = malloc(sizeof(char *) * (count_word + 1));
+            if(ret->cmd == NULL)
+                return (NULL);
         }
         else if (cur->type == STD_IN)
             handle_input(ret, cur->value);
@@ -140,14 +147,14 @@ t_cmd    *parse_cmd_table(t_token *lexer)
         // }
         else
         {
-            if(!ret->cmd)
-            {
-                count_word = ft_count_word(cur);
-                printf("nb_words = %d\n", count_word);
-                ret->cmd = malloc(sizeof(char *) * (count_word + 1));
-                if(ret->cmd == NULL)
-                    return (NULL);
-            }
+            // if(!ret->cmd)
+            // {
+            //     count_word = ft_count_word(cur);
+            //     printf("nb_words = %d\n", count_word);
+            //     ret->cmd = malloc(sizeof(char *) * (count_word + 1));
+            //     if(ret->cmd == NULL)
+            //         return (NULL);
+            // }
             if (cur->type == WORD)
             {
                 ret->cmd[i] = parse_string(cur->value, cur->len, ret->cmd, i);
@@ -156,6 +163,8 @@ t_cmd    *parse_cmd_table(t_token *lexer)
                 printf("%s\n", ret->cmd[i]);
                 printf("************************************************\n");
                 i++;
+                ret->argc = i;
+                printf("argc = %d\n", ret->argc);
             }
         }
         cur = cur->next;
