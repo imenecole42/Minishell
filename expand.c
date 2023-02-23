@@ -6,14 +6,14 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:46:37 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/20 17:00:28 by imraoui          ###   ########.fr       */
+/*   Updated: 2023/02/23 15:10:44 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <string.h>
 
-char	*ft_strjoin_char(char const *s1, char s2)
+/*char	*ft_strjoin_char(char const *s1, char s2)
 {
 	char	*ret;
 	size_t	s1_len;
@@ -33,6 +33,18 @@ char	*ft_strjoin_char(char const *s1, char s2)
 	ft_strlcpy(ret, s1, s1_len + 1);
 	ft_strlcpy(ret + s1_len, &s2, 2);
 	return (ret);
+}*/
+
+char *ft_strdup_char(char c)
+{
+    char  *dest;
+    
+    //if(!c)
+        //return(NULL);
+    dest = malloc(sizeof(char)*2);
+    dest[0] = c;
+    dest[1] = '\0';
+    return(dest);
 }
 
 char *env_finder(char *line, int start, int end)
@@ -75,10 +87,10 @@ void    replace(t_data *data)
     {
         while (data->line[i] == '$' && data->line[i])
         {
-            if(check_open_quotes_expand(data->line, i))
-                dollar = 1;
+            if(data->line[i] && check_open_quotes_expand(data->line, i) && ft_isalnum_mini(data->line[i + 1]))
+                    {dollar = 1;}
             else 
-                new = ft_strjoin_char(new, data->line[i]);
+               { new = ft_strjoin_hinda(new, ft_strdup_char(data->line[i]));}
             i++;
         }
         if (dollar == 1)
@@ -92,17 +104,17 @@ void    replace(t_data *data)
             if(env)
             {
                 env = ft_select1(env);
-                new = ft_strjoin(new, env);
+                new = ft_strjoin_hinda(new, env);
                 free(env);
             }
             dollar = 0;
         }
-        new = ft_strjoin_char(new, data->line[i]);
+        new = ft_strjoin_hinda(new, ft_strdup_char(data->line[i]));
         if (data->line[i] != '$' && data->line[i])
             i++; 
     }
     data->line = ft_strdup(new);
-    printf("%s\n", data->line);
+    printf("expand = %s\n", new);
     free(new);
     }
  

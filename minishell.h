@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/18 17:42:40 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:20:32 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_cmd
         int     nbr_cmd;
         int     here_doc;
         int     i;
+        int     argc;
         int     nbr_pipe;
         pid_t   *pid;
         struct s_cmd    *next;
@@ -166,6 +167,7 @@ t_cmd   *parse_cmd_table(t_token *lexer);
 void    ft_lstadd_back_command(t_cmd **lst, t_cmd *new);
 int     ft_count_word(t_token  *lexer);
 void	redefine_status(t_token *lexer);
+int     ft_count_list(t_cmd *cur);
 
 
 int     check_open_quotes(const char *line);
@@ -197,6 +199,8 @@ int     expand_finder(char *str);
 char    *env_finder(char *line, int start, int end);
 int     count_nodes(t_cmd *cmd_table);
 void    init_expand_variables(int i, int start, int end, int dollar);
+char    *ft_strdup_char(char c);
+void    print_liste_cmd(t_cmd **head);
 
 
 

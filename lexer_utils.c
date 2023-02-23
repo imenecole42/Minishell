@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:13 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/09 11:58:53 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/21 17:32:25 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 		return ;
 	}
 	while (last->next != NULL)
-	last = last->next;
+	    last = last->next;
 	last->next = new;
 }
 
@@ -129,8 +129,8 @@ void    ft_lstadd_back_command(t_cmd **lst, t_cmd *new)
     while (last->next != NULL)
     {
         last = last->next;
-        last->next = new;
     }
+    last->next = new;
 }
 
 
@@ -178,10 +178,13 @@ void    print_token(t_token **head)
 	}
 }*/
 
-/*void print_liste(t_token * head) {
-    t_token * current = head;
+void print_liste_cmd(t_cmd **head) {
+    t_cmd *current = *head;
+
     while (current != NULL) {
-        printf("len[%d]\n", current->len);
+        
+        printf("argv[0] = %s\n", current->cmd[0]);
+        printf("argc = %d\n", current->argc);
         current = current->next;
     }
-}*/
+}

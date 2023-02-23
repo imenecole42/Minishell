@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/18 17:39:11 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:41:45 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,18 @@ int main(int argc, char **argv, char **env)
             return(1);  //data exit status = 1
         while (1)
         {
-            // signal(SIGINT, sig_handler);
-            // signal(SIGQUIT,SIG_IGN);
+            signal(SIGINT, sig_handler);
+            signal(SIGQUIT,SIG_IGN);
             data.line = ft_strdup(display_prompt());
             if (check_input(&data) == FALSE)
                 return (1);
             replace(&data);
             data.token = read_input(data.line);
+            // //printf("ici\n");
             print_token(&data.token);
-            //data.cmds = init_command();
-            data.cmds = parse_cmd_table(data.token);
-            printf("ici c'est le main[0] = %s\n", data.cmds->cmd[0]);
-            printf("ici c'est le main = %s\n", data.cmds->cmd[1]);
-            printf("ici c'est le main = %s\n", data.cmds->cmd[2]);
+            // // //data.cmds = init_command();
+            // data.cmds = parse_cmd_table(data.token);
+            //print_liste_cmd(&data.cmds);
             //ft_basic_functions(line, argv);
             //read_command(command, parameters); // read input from terminal
         //if (fork() != 0) //parent
