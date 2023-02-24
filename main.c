@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/23 15:41:45 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/02/24 10:21:14 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int main(int argc, char **argv, char **env)
             // //printf("ici\n");
             print_token(&data.token);
             // // //data.cmds = init_command();
-            // data.cmds = parse_cmd_table(data.token);
-            //print_liste_cmd(&data.cmds);
+            data.cmds = parse_cmd_table(data.token);
+            print_liste_cmd(&data.cmds);
             //ft_basic_functions(line, argv);
             //read_command(command, parameters); // read input from terminal
         //if (fork() != 0) //parent
