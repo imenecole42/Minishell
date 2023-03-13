@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:07 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/21 16:20:32 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/13 10:10:35 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 
 #define TRUE 1
 #define FALSE 0
+
+#define SHE 10
+#define DFL 11
+#define IGN 12
 
 extern int      g_exit_code;
 
@@ -201,6 +205,7 @@ int     count_nodes(t_cmd *cmd_table);
 void    init_expand_variables(int i, int start, int end, int dollar);
 char    *ft_strdup_char(char c);
 void    print_liste_cmd(t_cmd **head);
+void    set_signal(int sig_int, int sig_quit);
 
 
 

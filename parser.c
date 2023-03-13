@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:17:01 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/21 17:31:10 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:20:14 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ t_cmd    *parse_cmd_table(t_token *lexer)
     int node;
     
     cur = lexer;
-    //ret = init_command();
     pipe = 0;
     i = 0;
     node = 0;
@@ -159,10 +158,10 @@ t_cmd    *parse_cmd_table(t_token *lexer)
             {if (ret->fd_out > 0)
                 close(ret->fd_out);
             handle_output_double(ret, cur->value);}
-        // else if (cur->type == LIMITER)
-        // {
-            
-        // }
+        else if (cur->type == LIMITER)
+        {
+            handle_heredoc(ret, )
+        }
         else
         {
             if (cur->type == WORD)
@@ -178,10 +177,6 @@ t_cmd    *parse_cmd_table(t_token *lexer)
         }
         cur = cur->next;
     }
-    // printf("argv[0] = %s\n", ret_tmp->cmd[0]);
-    // printf("argc = %d\n", ret_tmp->argc);
-    // printf("argv[0] = %s\n", ret->next->cmd[0]);
-    // printf("argc = %d\n", ret->next->argc);
     node = ft_count_list(ret_tmp);
     printf("nodes = %d\n", node);
     return(ret_tmp);
