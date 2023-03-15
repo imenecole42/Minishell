@@ -1,79 +1,89 @@
 #include "minishell.h"
+#include "Libft/libft.h"
 
-int	fill_heredoc_file(t_mini *mini, char *delimeter, int fd_in)
+int	fill_heredoc_file(t_data *data, char *delimeter, int fd)
 {
+	(void)data;
+	//(void)fd;
 	char	*string;
-	char	*expanded_str;
-	int		done;
+	//char	*expanded_str;
+	int		flag_delimeter;
 
 	string = NULL;
-	expanded_str = NULL;
-	done = 0;
-	string = readline(">>>>>");
+	//expanded_str = NULL;
+	flag_delimeter = 0;
+	string = readline(">");
+	printf(RED"%d\n"RESET,ft_strcmp(delimeter, string));
 	if (!string)
 		return (printf("warning: here-document delimited by %s\n", delimeter),
 			1);
-	if (!ft_strcmp(delimeter, string))
+	if (ft_strcmp(delimeter, string) != 0)
 	{
-		expanded_str = pre_expand(mini, string);
-		if (expanded_str)
-			ft_putendl_fd(string, fd_in);
+	// 	expanded_str = pre_expand(mini, string);
+	// 	if (expanded_str)
+		ft_putendl_fd(string, fd);
 	}
 	else
-		done = 1;
+		flag_delimeter = 1;
 	if (string)
 		free(string);
-	if (expanded_str)
-		free(expanded_str);
-	return (done);
+	// if (expanded_str)
+	// 	free(expanded_str);
+	return (flag_delimeter);
 }
 
-int	heredoc(t_mini *mini, char *delimeter, const char *in_file, int *fd_out)
+int	heredoc(t_data *data, t_cmd *cmd_line, char *delimeter, const char *tmp, int *fd_out)
 {
+	(void)fd_out;
+	(void)cmd_line;
 	int	done;
-	int	fd_in;
+	int	fd;
 
 	// g_sig.exit_step = 0;
 	// g_sig.status = 0;
-	fd_in = open(in_file, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	fd = open(tmp, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	done = 0;
-	signal(SIGINT, sig_init);
-	while (g_exit_code == 0 && !done)
+	//signal(SIGINT, sig_init);
+	while (done == FALSE) //while (g_exit_code == 0 && !done)
 	{
-		done = fill_heredoc_file(mini, delimeter, fd_in);
+		done = fill_heredoc_file(data, delimeter, fd);
 	}
-	if (g_exit_code != 0)
-	{
-		close(fd_in);
-		fd_in = -1;
-	}
-	close(fd_in);
-	*fd_out = open(in_file, O_RDONLY);
-	return (g_exit_code);
+	// if (g_exit_code != 0)
+	// {
+	// 	close(fd_in);
+	// 	fd_in = -1;
+	// }
+	close(fd);
+	//*fd_out = open(tmp, O_RDONLY);
+	return (done); //(g_exit_code)
 }
 
-char	*make_file_name(const char *filename_prefix)
-{
-	struct stat	st;
-	char		*filename;
-	char		*filename_suffix;
-	int			found;
-	int			index;
+// void	change_input(t_cmd *command, int fd, char *heredoc_file)
+// {
+// 	if (command->fd_in > 0)
+// 		close(command->fd_in);
+// 	if (command->heredoc_file)
+// 		unlink(command->heredoc_file);
+// 	command->fd_in = fd;
+// 	command->heredoc_file = heredoc_file;
+// }
+    
 
-	found = 0;
-	index = 0;
-	while (!found && index < INT_MAX)
-	{
-		filename_suffix = ft_itoa(index);
-		filename = ft_strjoin(filename_prefix, filename_suffix);
-		if (filename_suffix == NULL || filename == NULL)
-			return (NULL);
-		if (stat(filename, &st) != 0)
-			found = 1;
-		free(filename_suffix);
-		if (!found)
-			free(filename);
-		index += 1;
-	}
-	return (filename);
-}
+// void	handle_heredoc(t_data *data, t_cmd *command, char *delimiter)
+// {
+// 	int		fd;
+// 	char	*filename;
+// 	int		status;
+
+// 	filename = NULL;
+// 	filename = make_heredoc_name("/tmp/.tmp.minishell.heredoc");
+// 	status = heredoc(data, delimiter, filename, &fd);
+// 	if (status)
+// 	{
+// 		unlink(filename);
+// 		free(filename);
+// 		return (status);
+// 	}
+// 	//change_input(command, fd_in, filename);
+// 	return (status);
+// }

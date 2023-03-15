@@ -90,12 +90,15 @@ char *get_val_echo_space(char *str)
 char *check_var(char *str,t_data *mini)
 {
     int i = 0;
+    char *var;
+    var = NULL;
+    var = ft_select2(mini->env[i]);
     while ((mini->env[i]) && ft_strcmp(ft_select2(mini->env[i]), get_var_echo(str)))
 			i++;
 	if (mini->env[i] == 0)
 		return(NULL);
     else 
-        return(mini->env[i]);
+        return(free(var),mini->env[i]);
 }
 
 int ft_print_var_quote(char *str,t_data *mini)

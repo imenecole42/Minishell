@@ -6,13 +6,11 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 15:25:11 by imraoui           #+#    #+#             */
-/*   Updated: 2023/02/12 13:17:24 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:49:46 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern int	g_status;
 
 int	is_exit(char *str)
 {
@@ -31,40 +29,41 @@ int	is_exit(char *str)
 	return (0);
 }
 
-// void	ft_many_arg(t_data *mini)
-// {
-// 	g_status = 1;
-// 	write(2, "exit: too many arguments\n", 25);
-// 	if (mini->argc > 1)
-// 	{
-// 		//close_pipe et free childs
-// 		exit(1);
-// 	}
-// 	return ;
-// }
+ void	ft_many_arg(t_data *mini)
+ {
+ 	
+ 	write(2, "exit: too many arguments\n", 25);
+ 	if (mini->cmds->argc > 1)
+ 	{
+ 		//close_pipe et free childs
+ 		exit(1);
+ 	}
+ 	return ;
+ }
 
-// void	ft_exit(t_data *mini, char **cmd)
-// {
-// 	if (is_exit(cmd[1]) && ft_strlen_mat(cmd) > 2)
-// 		ft_many_arg(var);
-// 	else if (cmd[1] && is_exit(cmd[1]) == 0)
-// 	{
-// 		write(2, "exit : ", 8);
-// 		ft_putstr_fd(cmd[1], 2);
-// 		write(2, ": numeric argument required\n", 29);
-// 		//close_pipe et free childs
-// 		exit(2);
-// 	}
-// 	else if (ft_strlen_mat(cmd) == 1)
-// 	{
-// 		write(2, "exit\n", 5);
-// 		//close_pipe et free childs
-// 		exit(0);
-// 	}
-// 	else if (cmd[1] && is_exit(cmd[1]))
-// 	{	
-// 		g_status = ft_atoi(cmd[1]);
-// 		//close_pipe et free childs
-// 		exit (g_status);
-// 	}
-// }
+ void	ft_exit(t_data *mini, char **cmd)
+ {
+	int atoi;
+ 	if (is_exit(cmd[1]) && ft_strlen_mat(cmd) > 2)
+ 		ft_many_arg(mini);
+ 	else if (cmd[1] && is_exit(cmd[1]) == 0)
+ 	{
+ 		write(2, "exit : ", 8);
+ 		ft_putstr_fd(cmd[1], 2);
+ 		write(2, ": numeric argument required\n", 29);
+ 		//close_pipe et free childs
+ 		exit(2);
+ 	}
+ 	else if (ft_strlen_mat(cmd) == 1)
+ 	{
+ 		write(2, "exit\n", 5);
+ 		//close_pipe et free childs
+ 		exit(0);
+ 	}
+ 	else if (cmd[1] && is_exit(cmd[1]))
+ 	{	
+ 		atoi = ft_atoi(cmd[1]);
+ 		//close_pipe et free childs
+ 		exit (atoi);
+ 	}
+ }

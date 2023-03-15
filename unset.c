@@ -6,27 +6,34 @@
 /*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 11:08:06 by imraoui           #+#    #+#             */
-/*   Updated: 2023/02/06 11:27:59 by imraoui          ###   ########.fr       */
+/*   Updated: 2023/03/07 01:25:08 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(t_data *mini, char *str)
+void	ft_unset(t_data *mini, char **argv)
 {
 	int	i;
-
 	i = 0;
-	if (mini->argc > 1)
+	
+	int j;
+	j = 1;
+	while(j < mini->cmds->argc)
 	{
-		while ((mini->env[i]) && ft_strcmp(ft_select2(mini->env[i]), str))
+		i = 0;
+		while ((mini->env[i]) && ft_strcmp(ft_select2(mini->env[i]), argv[j]))
 			i++;
-		if (mini->env[i + 1] == 0)
-			return ;
+		if (i == ft_strlen_mat(mini->env))
+			printf("j'ai rien trouve%d",j);
 		else
-			realloc_unset(mini, str);
+		{
+			printf("j'efface un variable%d\n",j);
+			printf("argc%d\n",mini->cmds->argc);
+			realloc_unset(mini, argv[j]);
+		}
+		j++;
 	}
-	return ;
 }
 
 void	util_unset(t_data *mini, int i, int j, char **temp)

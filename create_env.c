@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imraoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:21:30 by imraoui           #+#    #+#             */
-/*   Updated: 2023/02/03 14:33:53 by imraoui          ###   ########.fr       */
+/*   Updated: 2023/03/14 08:11:31 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	creat_env(char **env, t_data *mini)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (env[i])
-		i++;
-	mini->env = malloc(sizeof(char *) * (i + 1));
-	if (!mini->env)
-		return (0);
-	mini->env[i] = 0;
-	while (env[j])
-	{
-		mini->env[j] = ft_strdup(env[j]);
-		j++;
-	}
-	return (0);
-}
 
 void	realloc_env(t_data *mini, char *str)
 {

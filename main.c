@@ -6,7 +6,7 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:50:28 by hferjani          #+#    #+#             */
-/*   Updated: 2023/03/13 16:13:59 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:29:22 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,10 @@ void    sig_handler(int signum)
     {
         write(1, "\n", 1);
         rl_on_new_line();
-        rl_replace_line("", 0);
+        //rl_replace_line("", 0);
         rl_redisplay();
     }
-    if(signum == SIGQUIT)
-    {
-        rl_on_new_line();
-        rl_redisplay();
-    }
-}
 
-void    set_signal(int sig_int, int sig_quit)
-{
-    if(sig_int == IGN)
-        signal(SIGINT, SIG_IGN);
-    if(sig_int == DFL)
-        signal(SIGINT, SIG_DFL);
-    if(sig_int == SHE)
-        signal(SIGINT, sig_handler);
-    if(sig_quit == IGN)
-        signal(SIGQUIT, SIG_IGN);
-    if(sig_quit == DFL)
-        signal(SIGQUIT, SIG_DFL);
-    if(sig_quit == SHE)
-        signal(SIGQUIT, sig_handler);
 }
 
 char    *display_prompt(void)
@@ -109,27 +89,26 @@ int main(int argc, char **argv, char **env)
     {
         if(init_struct(&data, env) == FALSE)
             return(1);  //data exit status = 1
+        //creat_env(env,&data);
         while (1)
         {
-            // signal(SIGINT, sig_handler);
-            // signal(SIGQUIT,SIG_IGN);
-            set_signal(SHE,SHE);
-            g_exit_code = 0;
-            data.line = ft_strdup(display_prompt());
+            signal(SIGINT, sig_handler);
+            signal(SIGQUIT,SIG_IGN);
+            data.line = display_prompt();
             if (check_input(&data) == FALSE)
                 return (1);
             replace(&data);
             data.token = read_input(data.line);
-            //print_token(&data.token);
+            // //printf("ici\n");
+            print_token(&data.token);
+            //ft_export(data.cmds->cmd,&data);
+            //ft_env(&data);
             // // //data.cmds = init_command();
-            data.cmds = parse_cmd_table(data.token);
-            print_liste_cmd(&data.cmds);
-            //read_command(command, parameters); // read input from terminal
-        //if (fork() != 0) //parent
-           // wait(NULL); // wait for child
-        //else
-           // execve (command, parameters, 0); // execute command
-        //return (0);
+            data.cmds = parse_cmd_table(&data,data.token);
+            data.nbr_cmd = ft_count_list(data.cmds);
+            data.nbr_cmd = data.nbr_cmd;
+            data.nbr_pipe = data.nbr_cmd - 1;
+            exec_cmd(data.cmds,&data);
         }
     }
     else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:46:37 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/23 15:10:44 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:12:19 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ void    replace(t_data *data)
     int end;
     char *env;
     char *new;
-
+    char *str;
     i = 0;
     start = 0;
     end = 0;
     dollar = 0;
     env = NULL;
     new = NULL;
+   str=NULL;
     while(data->line[i])
     {
         while (data->line[i] == '$' && data->line[i])
@@ -90,7 +91,12 @@ void    replace(t_data *data)
             if(data->line[i] && check_open_quotes_expand(data->line, i) && ft_isalnum_mini(data->line[i + 1]))
                     {dollar = 1;}
             else 
-               { new = ft_strjoin_hinda(new, ft_strdup_char(data->line[i]));}
+            { 
+                
+                 str = ft_strdup_char(data->line[i]);
+                new = ft_strjoin_hinda(new, str);
+                free(str);
+            }
             i++;
         }
         if (dollar == 1)
@@ -109,12 +115,18 @@ void    replace(t_data *data)
             }
             dollar = 0;
         }
-        new = ft_strjoin_hinda(new, ft_strdup_char(data->line[i]));
+        str = ft_strdup_char(data->line[i]);
+        new = ft_strjoin_hinda(new, str);
+        free(str);
+        // printf("free[%d]\n",i);
+        // printf("%s\n",ft_strdup_char(data->line[i]));
         if (data->line[i] != '$' && data->line[i])
             i++; 
+ 
+
     }
     data->line = ft_strdup(new);
-    printf("expand = %s\n", new);
+    //printf("expand = %s\n", new);
     free(new);
     }
  

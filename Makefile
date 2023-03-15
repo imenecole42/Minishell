@@ -5,7 +5,7 @@ NAME := minishell.a
 SOFT_NAME := minishell
 
 CC := gcc
-FLAGS := -Wall -Wextra -Werror -lreadline -g -I includes/
+FLAGS := -Wall -Wextra -Werror -lreadline -g3 -I includes/
 SRC_DIR := sources/
 OBJ_DIR := objects/
 AR := ar rc
@@ -43,6 +43,13 @@ SRCS =	main.c \
 		parser.c \
 		parsing_utils.c \
 		basic_functions.c\
+		execution.c \
+		close_exec.c \
+		ft_free_exec.c \
+		ft_child.c \
+		util_exec.c \
+		ft_is_bullting.c \
+		heredoc.c
 		
 		
 

@@ -6,7 +6,7 @@
 /*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 15:42:38 by imraoui           #+#    #+#             */
-/*   Updated: 2023/02/03 15:43:16 by imraoui          ###   ########.fr       */
+/*   Updated: 2023/03/10 03:45:15 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_pwd(t_data *mini)
 	char	*pwd;
 
 	pwd = NULL;
-	if (mini->argc == 2)
+	if (mini->cmds->argc == 1)
 	{
 		pwd = getcwd(NULL, 0);
 		if (!pwd)

@@ -6,7 +6,7 @@
 /*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:55:49 by imraoui           #+#    #+#             */
-/*   Updated: 2023/02/03 15:13:04 by imraoui          ###   ########.fr       */
+/*   Updated: 2023/02/20 20:11:38 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,23 @@ int	ft_check(char *argv)
 int	ft_echo(char **argv, t_data *mini)
 {
 	int	i;
-	int	j;
+	int	flag;
 
 	i = 1;
-	j = 0;
-	if (i < mini->argc - 1)
-		i++;
-	while (argv[i][j] && i <= mini->argc - 1)
+	flag = 0;
+	while (i < mini->cmds->argc && ft_check(argv[i]))
 	{
-		write(1, &argv[i][j], 1);
-		j++;
+		i++;
+		flag = 1;
 	}
-	i--;
-	if (!ft_check(argv[i]))
-		write(1, "\n", 1);
+	while (i < mini->cmds->argc)
+	{
+		printf("%s",argv[i]);
+		if(i + 1 < mini->cmds->argc)
+			printf(" ");
+		i++;
+	}
+	if (flag == 0)
+		printf("\n");
 	return (0);
 }

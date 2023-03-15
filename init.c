@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:44:49 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/15 16:53:31 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:27:40 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ int    init_struct(t_data *data, char **env)
     //ft_bzero(data, sizeof(t_data));
     //(void) env;
     data->line = NULL;
-    //data->export = NULL;
     data->cmds = NULL;
     data->env = NULL;
     data->exit_status = 0;
     data->argc = 0;
     data->token = NULL;
+    data->nbr_cmd = 0;
+    data->nbr_pipe = 0;
     if (dup_env(data, env) == FALSE)
     {
         printf("error : initialization of environment");

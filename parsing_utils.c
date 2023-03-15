@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: imraoui <imraoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:51:36 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/23 14:15:27 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:13:51 by imraoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int check_open_quotes_expand(const char *line, int pos)
     i = 0;
     open_dquotes = 0;
     open_squotes = 0;
-    printf("pos = %d\n", pos);
+    //printf("pos = %d\n", pos);
     while (line[i] && i < pos)
     {
         if (line[i] == 34 && is_even(open_squotes))
@@ -46,8 +46,8 @@ int check_open_quotes_expand(const char *line, int pos)
             open_squotes++;
         i++;
     }
-    printf("i = %d\n", i);
-    printf("simple quotes ouvertes = %d\n", open_squotes);
+    //printf("i = %d\n", i);
+    //printf("simple quotes ouvertes = %d\n", open_squotes);
     if (!is_even(open_squotes))
         return(0);
     return(1);

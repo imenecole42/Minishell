@@ -6,12 +6,11 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:43:24 by hferjani          #+#    #+#             */
-/*   Updated: 2023/02/16 16:18:15 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:30:20 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 int is_special_char(char *line, int i)
 {
     if (line[i] == '|')
@@ -83,13 +82,6 @@ int save_word(t_token **lexer, char *line, enum e_state status)
         i++;
     }
     ft_lstadd_back_token(lexer, create_token(line, i, WORD, status));
-    //print_token(&lexer);
-    //printf("save word : %s\n", line);
-    //printf("save word_struct : %s\n", tmp->value);
-    //printf("save word_len : %d\n", tmp->len);
-    //printf("save word_type : %d\n", tmp->type);
-    //printf("save word_status : %d\n", tmp->qstatus);
-    //printf("save_word i: %d\n", i);
     return (i);
 }
 
@@ -188,12 +180,15 @@ t_token *read_input(char *line)
     {
         if (forbidden_series(line) == 1)
             {printf("syntax error near unexpected token\n");
-            return (NULL);}
+            //return (NULL);
+            exit (1);
+            }
             //error function
         else if (forbidden_series(line) == 2)
         {
-            printf("tout ce qui n'est pas demande n'est pas a faire\n");
-            return (NULL);
+            printf("%stout ce qui n'est pas demande n'est pas a faire%s\n",BACK_BOLD_CYAN,RST);
+            //return (NULL);
+            exit (1);
         }
     }
     while (line[i])

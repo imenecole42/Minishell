@@ -22,7 +22,7 @@ char *strdup_plus(char *str)
 
 	j=0;
     i = 0;
-    dest=malloc(sizeof(char)*ft_strlen(str)+1);
+    dest = malloc(sizeof(char)*ft_strlen(str)+1);
     while(str[j] && str[j]!='+')
     {
         dest[i]=str[j];
@@ -65,6 +65,7 @@ char *ft_select2(char *str)
     dest[j]='\0';
     return (dest);
 }
+
 char *ft_select(char *str)
 {
     char    *dest;

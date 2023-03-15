@@ -6,33 +6,33 @@
 /*   By: hferjani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 16:17:01 by hferjani          #+#    #+#             */
-/*   Updated: 2023/03/13 16:20:14 by hferjani         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:20:48 by hferjani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "Libft/libft.h"
 
-t_cmd    *init_command(void)
-{
-    t_cmd   *cmd_line;
+// t_cmd    *init_command(void)
+// {
+//     t_cmd   *cmd_line;
     
-    cmd_line = malloc(sizeof(t_cmd));
-    if (cmd_line)
-    {
-        cmd_line->next = NULL;
-        cmd_line->cmd = NULL;
-        cmd_line->heredoc_limit = NULL;
-        cmd_line->i = 0;
-        cmd_line->argc = 0;
-        cmd_line->here_doc = 0;
-        cmd_line->nbr_cmd = 0;
-        cmd_line->nbr_pipe = 0;
-        cmd_line->fd_in = -1;
-        cmd_line->fd_out = -1;
-    }
-    return (cmd_line);
-}
+//     cmd_line = malloc(sizeof(t_cmd));
+//     if (cmd_line)
+//     {
+//         cmd_line->next = NULL;
+//         cmd_line->cmd = NULL;
+//         cmd_line->heredoc_limit = NULL;
+//         cmd_line->i = 0;
+//         cmd_line->argc = 0;
+//         cmd_line->here_doc = 0;
+//         cmd_line->nbr_cmd = 0;
+//         cmd_line->nbr_pipe = 0;
+//         cmd_line->fd_in = -1;
+//         cmd_line->fd_out = -1;
+//     }
+//     return (cmd_line);
+// }
 
 t_cmd   *create_cmd(int count_word)
 {
@@ -47,7 +47,7 @@ t_cmd   *create_cmd(int count_word)
     cmd_line->next = NULL;
     cmd_line->heredoc_limit = NULL;
     cmd_line->argc = 0;
-    cmd_line->nbr_pipe = 0;
+    //cmd_line->nbr_pipe = 0;
     return(cmd_line);
     
 }
@@ -87,14 +87,6 @@ void    handle_output_double(t_cmd  *cmd_line, char *filename)
     cmd_line->fd_out = fd_out;
 }
 
-/*void    handle_heredoc(t_cmd *cmd_line, char *delimiter)
-{
-    int fd_in;
-    char *filename;
-    
-    filename = NULL;
-    
-}*/
 
 char    *parse_string(char *content,int len, char **argv, int i)
 {
@@ -114,22 +106,62 @@ char    *parse_string(char *content,int len, char **argv, int i)
     return (argv[i]);
 }
 
-t_cmd    *parse_cmd_table(t_token *lexer)
+static char	*make_heredoc_name(void)
 {
+	static int	i;
+	char		*name;
+    //char *s1;
+	char		*number;
+
+    //s1 = ft_strdup(HEREDOC_PREFIX);
+	number = ft_itoa(i);
+	if (!number)
+		return (NULL);
+	name = ft_strjoin(ft_strdup(HEREDOC_PREFIX), number);
+	free(number);
+	i++;
+	return (name);
+}
+
+void    handle_heredoc(t_data *data, t_cmd *cmd_line, char *delimiter)
+{
+    // (void)data;
+    // (void)cmd_line;
+    // (void)delimiter;
+    int fd;
+    int status;
+    char *heredoc_name;
+    
+    heredoc_name = NULL;
+    heredoc_name = make_heredoc_name();
+	printf(BOLD_BLUE"%s\n"RESET, heredoc_name);
+    status = heredoc(data, cmd_line,delimiter,heredoc_name, &fd);
+    //printf("%d\n", status);
+    if (status)
+	{
+		// unlink(heredoc_name);
+		// free(heredoc_name);
+		//return (status);
+	}
+    //return(status);
+}
+
+t_cmd    *parse_cmd_table(t_data *data, t_token *lexer)
+{
+    (void)data;
     t_token *cur;
     t_cmd   *ret;
     t_cmd   *ret_tmp;
     int i;
     int count_word;
     int pipe;
-    int node;
+    //int node;
     
     cur = lexer;
     pipe = 0;
     i = 0;
-    node = 0;
+    //node = 0;
     count_word = ft_count_word(cur);
-    printf("original count word :%d\n", count_word);
     ret = create_cmd(count_word);
     ret_tmp = ret;
     while (cur)
@@ -160,7 +192,8 @@ t_cmd    *parse_cmd_table(t_token *lexer)
             handle_output_double(ret, cur->value);}
         else if (cur->type == LIMITER)
         {
-            handle_heredoc(ret, )
+            //printf("ok\n");
+            handle_heredoc(data, ret, cur->value);
         }
         else
         {
@@ -177,8 +210,8 @@ t_cmd    *parse_cmd_table(t_token *lexer)
         }
         cur = cur->next;
     }
-    node = ft_count_list(ret_tmp);
-    printf("nodes = %d\n", node);
+    //node = ft_count_list(ret_tmp);
+    //printf("nodes = %d\n", node);
     return(ret_tmp);
 }
 
